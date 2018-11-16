@@ -1,0 +1,3 @@
+;;; Make package support file. Do not EDIT!!
+;;; for F:/APPS/CCS_CAD/LISP/DRAWSUP.FAS
+("*" ("DRAWSUP" C:DRAWSUP))

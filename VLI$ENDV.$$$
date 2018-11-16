@@ -1,0 +1,2 @@
+;;; Auto-generated RTS-application init file
+(LOAD "ENDVIEW")

@@ -1,0 +1,74 @@
+;;; --------------------------------------------------------------
+;;; --------- USER VARIABLES LIST [to fill by WIZARD] ------------
+;;; --------------------------------------------------------------
+;;-&&-executable-names
+(setq -&&-executable-names
+       '("vlrts.arx"
+	 .
+	 "F:/APPS/CCS_CAD/LISP/DRAWSUP.ARX"
+	)
+)
+
+;;-&&-init-file
+(setq -&&-init-file '("F:/APPS/CCS_CAD/LISP/VLI$DRAW.$$$" T))
+
+;;-&&-source-list
+(setq -&&-source-list '(("LSP" "F:/APPS/CCS_CAD/LISP/DRAWSUP.LSP")))
+
+;;-&&-dcl-list
+(setq -&&-dcl-list nil)
+
+;;-&&-xdf-list
+(setq -&&-xdf-list nil)
+
+;;-&&-init-functions
+(setq -&&-init-functions nil)
+
+;;-&&-generate-init-fun-list
+(setq -&&-generate-init-fun-list 'T)
+
+;;; --------------------------------------------------------------
+;;; --------- Process the data [Making the Application] ----------
+;;; --------------------------------------------------------------
+
+;; GENERATE the target FAS-file list!
+(setq -&&-fas-filenames
+       (make-package-fas-list 
+	 -&&-init-file 
+	 -&&-source-list
+       )
+)
+
+;; GENERATE or CHECK Auto-init function list
+(if (not (eq -&&-init-functions t))
+  (setq -&&-export-function-list
+         (make-package-auto-init-list
+	   -&&-init-file
+	   -&&-source-list
+	 )
+  )
+)
+
+(if -&&-generate-init-fun-list
+  ;; Use all EXPORT functions as Auto-init functions
+  (progn 
+    (setq -&&-target-init-functions -&&-export-function-list)
+    (report-generated-auto-init-list -&&-export-function-list)
+  )
+  (progn 
+    ;; Use the explicit user-supplied list of init-functions
+    (setq -&&-target-init-functions -&&-init-functions)
+    (check-user-auto-init-list -&&-init-functions -&&-export-function-list)
+  )
+)
+
+;; BIND the FAS & XDF-files; AUTO-INIT function list to executable file
+(make-package+
+  -&&-executable-names
+  -&&-fas-filenames
+  -&&-xdf-list
+  -&&-dcl-list
+  -&&-target-init-functions
+)
+
+;;EOF
