@@ -1,0 +1,104 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/2258b24b/
+*merr*	acadr14.lsp	/^(defun *merr* (msg)$/;"	f
+*merrmsg*	acadr14.lsp	/^(defun *merrmsg* (msg)$/;"	f
+C:DDNUMB	autonumb.lsp	/^(defun C:DDNUMB (\/ CMD dcl_id1 olderr)$/;"	f
+C:gotourl	acadr14.lsp	/^(defun C:gotourl ( \/ ssurl url i)$/;"	f
+ERR	autonumb.lsp	/^(DEFUN ERR (S)				;if an error (such as CTRL-C)$/;"	f
+LispEd	acadr14.lsp	/^(defun LispEd (contents \/ fname dcl state)$/;"	f
+_autoarxload	acadr14.lsp	/^(defun _autoarxload (app)$/;"	f
+_autoload	acadr14.lsp	/^(defun _autoload (app)$/;"	f
+_autoqload	acadr14.lsp	/^(defun _autoqload (quoi app cmdliste \/ qapp symnam)$/;"	f
+_autoxload	acadr14.lsp	/^(defun _autoxload (app)$/;"	f
+_default	Endview_modified.lsp	/^(defun _default (itm msg n s)$/;"	f
+acad_helpdlg	acadr14.lsp	/^(defun acad_helpdlg (helpfile topic)$/;"	f
+ai_AppLoaded	acadr14.lsp	/^(defun ai_AppLoaded (appname apptype)$/;"	f
+ai_ffile	acadr14.lsp	/^(defun ai_ffile (app)$/;"	f
+ai_nofile	acadr14.lsp	/^(defun ai_nofile (filename)$/;"	f
+ainrloc	Endview.lsp	/^(defun ainrloc (rsl rd cw bw rc off \/ marg na rll spx) ;REBAR SPACE LIST, REBAR DIA. , COLUMN W/;"	f
+ainrloc	Endview_modified.lsp	/^(defun ainrloc (rsl rd cw bw rc off \/ marg _na rll spx) ;REBAR SPACE LIST, REBAR DIA. , COLUMN /;"	f
+autoarxacedload	acadr14.lsp	/^(defun autoarxacedload (app cmdliste \/ qapp symnam)$/;"	f
+autoarxload	acadr14.lsp	/^(defun autoarxload (app cmdliste)$/;"	f
+autoload	acadr14.lsp	/^(defun autoload (app cmdliste)$/;"	f
+autonativeload	acadr14.lsp	/^(defun autonativeload (app cmdliste \/ qapp)$/;"	f
+autoxload	acadr14.lsp	/^(defun autoxload (app cmdliste)$/;"	f
+c:CBSG	CBSG.lsp	/^(defun c:CBSG ( \/ CBSG-Slab CBSG-Colu CBSG-Reba CBSG-Anch sd dcl_id )$/;"	f
+c:beam_spt	Bsx.lsp	/^(defun c:beam_spt ()$/;"	f
+c:bmplan	beamplan.lsp	/^(defun c:bmplan ()$/;"	f
+c:chairbom	erna_old.lsp	/^(defun c:chairbom ()$/;"	f
+c:cutopen	acadr14.lsp	/^(defun c:cutopen ()$/;"	f
+c:cutquit	acadr14.lsp	/^(defun c:cutquit ()$/;"	f
+c:cuts	cuts.lsp	/^(defun c:cuts ()$/;"	f
+c:ddemodes	acadr14.lsp	/^(defun c:ddemodes()$/;"	f
+c:drawsup	Drawsup.lsp	/^(defun c:drawsup ()$/;"	f
+c:drawsup	Drawsup.lsp.bak.lsp	/^(defun c:drawsup ()$/;"	f
+c:endview	Endview.lsp	/^(defun c:endview ()$/;"	f
+c:endview	Endview_modified.lsp	/^(defun c:endview ()$/;"	f
+c:gifin	acadr14.lsp	/^(defun c:gifin ()$/;"	f
+c:newdwg	olddwg.lsp	/^(defun c:newdwg ()     ;MAIN PROGRAM$/;"	f
+c:pcxin	acadr14.lsp	/^(defun c:pcxin ()$/;"	f
+c:tiffin	acadr14.lsp	/^(defun c:tiffin ()$/;"	f
+cantdo	Endview.lsp	/^(defun cantdo ()$/;"	f
+cantdo	Endview_modified.lsp	/^(defun cantdo ()$/;"	f
+count	Drawsup.lsp	/^(defun count (pl cl tp n) ;POINT LIST, COMPARISON LIST, TEST POINT, POINT COUNTER - HOLD TP CONS/;"	f
+count	Drawsup.lsp.bak.lsp	/^(defun count (pl cl tp n) ;POINT LIST, COMPARISON LIST, TEST POINT, POINT COUNTER - HOLD TP CONS/;"	f
+dimanch	Endview.lsp	/^(defun dimanch ()$/;"	f
+dimanch	Endview_modified.lsp	/^(defun dimanch ()$/;"	f
+dimspa	Bsx.lsp	/^(defun dimspa ()$/;"	f
+dimspa	beamplan.lsp	/^(defun dimspa ()$/;"	f
+drawanch	Endview.lsp	/^(defun drawanch ()$/;"	f
+drawanch	Endview_modified.lsp	/^(defun drawanch ()$/;"	f
+drawbar	Endview.lsp	/^(defun drawbar ()  ;CREATE REBAR SPACING LIST IF NOT CREATED IN INPUT AND DRAW VERT. COLUMN REBA/;"	f
+drawbar	Endview_modified.lsp	/^(defun drawbar ()  ;CREATE REBAR SPACING LIST IF NOT CREATED IN INPUT AND DRAW VERT. COLUMN REBA/;"	f
+drawbeam	Bsx.lsp	/^(defun drawbeam ()  ;DRAW BEAM, TENDONS & SUPPORTS$/;"	f
+drawbeam	Endview.lsp	/^(defun drawbeam ()  $/;"	f
+drawbeam	Endview_modified.lsp	/^(defun drawbeam ()  $/;"	f
+drawbeam	beamplan.lsp	/^(defun drawbeam ()  ;DRAW BEAM, TENDONS & SUPPORTS$/;"	f
+drawspacingdim	Drawsup.lsp	/^(defun drawspacingdim (ns d p1 p2 mode layer)$/;"	f
+drawspacingdim	Drawsup.lsp.bak.lsp	/^(defun drawspacingdim (ns d p1 p2 mode layer)$/;"	f
+drawsup	Drawsup.lsp	/^(defun drawsup (pl1 pl2 pt1 pt2 h1 h2 s n f fh c lname \/ ncl)    ;nc - GLOBAL VARIABLE$/;"	f
+drawsup	Drawsup.lsp.bak.lsp	/^(defun drawsup (pl1 pl2 pt1 pt2 h1 h2 s n f fh c lname \/ ncl)    ;nc - GLOBAL VARIABLE$/;"	f
+drawtend	beamplan.lsp	/^(defun drawtend ()$/;"	f
+fitstr2len	acadr14.lsp	/^(defun fitstr2len (str1 maxlen)$/;"	f
+genip	Bsx.lsp	/^(defun genip ()$/;"	f
+genip	beamplan.lsp	/^(defun genip ()$/;"	f
+imagefile	acadr14.lsp	/^(defun imagefile (filename \/ filedia-save cmdecho-save)$/;"	f
+import3ds	acadr14.lsp	/^(defun import3ds (filename \/ filedia_old render)$/;"	f
+input	Bsx.lsp	/^(defun input ()$/;"	f
+input	Endview.lsp	/^(defun input ()$/;"	f
+input	Endview_modified.lsp	/^(defun input ()$/;"	f
+input	beamplan.lsp	/^(defun input ()$/;"	f
+input	olddwg.lsp	/^(defun input ()$/;"	f
+intpt	Drawsup.lsp	/^(defun intpt (l fac i \/ x y)$/;"	f
+intpt	Drawsup.lsp.bak.lsp	/^(defun intpt (l fac i \/ x y)$/;"	f
+is_lead_byte	acadr14.lsp	/^(defun is_lead_byte(code)$/;"	f
+label	Bsx.lsp	/^(defun label ()$/;"	f
+label	beamplan.lsp	/^(defun label ()$/;"	f
+listatt	erna_old.lsp	/^(defun listatt ()$/;"	f
+loadedp	acadr14.lsp	/^(defun loadedp (app appset)$/;"	f
+nocoin	Drawsup.lsp	/^(defun nocoin (pl \/ rl n lo li i n)  ;COUNT NONCOINCIDENTAL POINTS$/;"	f
+nocoin	Drawsup.lsp.bak.lsp	/^(defun nocoin (pl \/ rl n lo li i n)  ;COUNT NONCOINCIDENTAL POINTS$/;"	f
+printatt	erna_old.lsp	/^(defun printatt (n i sp)$/;"	f
+proline	erna_old.lsp	/^(defun proline (l cn 2f h n \/ hnl cc )$/;"	f
+s::startup	acadr14.lsp	/^(defun s::startup ()$/;"	f
+shtgen1	Drawsup.lsp	/^(defun shtgen1 (l x a1 a2 e1 e2 \/ y)$/;"	f
+shtgen1	Drawsup.lsp.bak.lsp	/^(defun shtgen1 (l x a1 a2 e1 e2 \/ y)  $/;"	f
+shtgen1	beamplan.lsp	/^(defun shtgen1 (l x a1 a2 e1 e2 \/ y)$/;"	f
+shtgen2	Drawsup.lsp	/^(defun shtgen2 (l x a3 a2 e2 e3 \/ y)$/;"	f
+shtgen2	Drawsup.lsp.bak.lsp	/^(defun shtgen2 (l x a3 a2 e2 e3 \/ y)$/;"	f
+shtgen2	beamplan.lsp	/^(defun shtgen2 (l x a3 a2 e2 e3 \/ y)     $/;"	f
+spins	Bsx.lsp	/^(defun spins (c) ;FUNCTION TO INSERT SPECIAL CHARACTERS @ FRACTIONS     $/;"	f
+spins	Drawsup.lsp	/^(defun spins (c) ;FUNCTION TO INSERT SPECIAL CHARACTERS @ FRACTIONS$/;"	f
+spins	Drawsup.lsp.bak.lsp	/^(defun spins (c) ;FUNCTION TO INSERT SPECIAL CHARACTERS @ FRACTIONS $/;"	f
+spins	beamplan.lsp	/^(defun spins (c) ;FUNCTION TO INSERT SPECIAL CHARACTERS @ FRACTIONS     $/;"	f
+tend_cnt	Drawsup.lsp	/^(defun tend_cnt (ss pt1 pt2 \/ pl en cl)   ;FUNCTION TO LIST ALL VERTICES POINTS TO DETERMINE CH/;"	f
+tend_cnt	Drawsup.lsp.bak.lsp	/^(defun tend_cnt (ss pt1 pt2 \/ pl en cl)   ;FUNCTION TO LIST ALL VERTICES POINTS TO DETERMINE CH/;"	f
+tgtname	olddwg.lsp	/^(defun tgtname ()$/;"	f
+verify_arxapp_loaded	acadr14.lsp	/^(defun verify_arxapp_loaded (app) $/;"	f
+wbatch	olddwg.lsp	/^(defun wbatch ()$/;"	f
+wscript	olddwg.lsp	/^(defun wscript ()$/;"	f
