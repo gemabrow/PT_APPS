@@ -18,15 +18,20 @@
   (setq bsup_exist 'N) ;FLAG FOR EXISTING BEGINNING SUPPORT
   (setq esup_exist 'N) ;FLAG FOR EXISTING ENDING SUPPORT
 
-  ;TODO: PULL MAX SUPPORT BAR SPACING FROM CONFIG FILE
-  ;(setq maxspa (getdist "Enter maximum support bar spacing [48\"]: "))
-  ;(if (= maxspa nil)
-  (setq maxspa 42)
-  ;)
+  ;;GET MAX SUPPORT BAR SPACING FROM CONFIG FILE
+  ;;OTHERWISE, DEFAULT TO 42 IF USER PROVIDES NO INPUT
+  (setq config_filepath (strcat (getvar 'dwgprefix) "\config.txt"))
+  (if (/= (findfile config_filepath) nil)
+    ((setq f (open config_filepath "r"))
+     (setq maxspa (read-line f))) ;if file exists, read in config
+    ((setq maxspa (getdist "Enter maximum support bar spacing [42\"]: "))
+     (if (= maxspa nil)
+       (setq maxspa 42)))) ;default to 42 maxspa
 
   (setq a1 "100")
 
-  (while (not (or (< (atoi a1) 50) (= (strcase a1) "H")))
+  (while (not (or (< (atoi a1) 50)
+                  (= (strcase a1) "H")))
     (setq a1 (getstring "\nEnter N value (L/N) to locate inflection point,\
                          \ 0 for simple parabola [10]: "))
     (if (= a1  "")
@@ -44,8 +49,7 @@
   (setq t_layer (getkword "Enter U for Uniform or B for Banded tendon supports: "))
   (if (= (strcase t_layer) "U")
     (setq t_layer "UNIFORM")
-    (setq t_layer "BAND")
-  )
+    (setq t_layer "BAND"))
 
   (command "layer" "T" t_layer "")  ;THAW AFFECTED LAYER
   (setq continue "Y")
@@ -57,7 +61,8 @@
   (setq p2 (getpoint))
   (terpri)
   (if (= (getvar "orthomode") 1) ;MAKE P2 ORTHO W/ RESPECT TO P1 IF ORTHOMODE IS ON
-    (if (< (abs (- (car p1 ) (car p2))) (abs (- (cadr p1 ) (cadr p2))))
+    (if (< (abs (- (car p1 ) (car p2)))
+           (abs (- (cadr p1 ) (cadr p2))))
       (setq p2 (list (car p1) (cadr p2)))
       (setq p2 (list (car p2) (cadr p1)))))
 
@@ -89,15 +94,14 @@
                                 (8 . "BAND_SUP")
                                 (-4 . "OR>")
                                 (-4 . "AND>"))) ;DON"T DRAW LINE IF ALREADY EXISTS
-    (setq bsup_exist 'Y)
-  )
+    (setq bsup_exist 'Y))
 
   (setq hp1 (getreal "Enter first highpoint cgs in inches: "))
   (setq lp (getreal "Enter lowpoint cgs in inches if required, else return: "))
 
   ;;GET SS OF TENDONS INTERSECTING SUPPORT LINE
   (if (/= ss_tendon nil)
-    (setq nc (tend_cnt ss_tendon p1 p2 ))
+    (setq nc (tend_cnt ss_tendon p1 p2))
     (progn
       (alert "NO TENDONS FOUND ON THE UNIFORM OR BAND LAYERS - PROGRAM CANCELED")
       (exit)))
