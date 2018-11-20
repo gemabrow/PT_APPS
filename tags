@@ -81,7 +81,7 @@ label	Bsx.lsp	/^(defun label ()$/;"	f
 label	beamplan.lsp	/^(defun label ()$/;"	f
 listatt	erna_old.lsp	/^(defun listatt ()$/;"	f
 loadedp	acadr14.lsp	/^(defun loadedp (app appset)$/;"	f
-nocoin	Drawsup.lsp	/^(defun nocoin (pl \/ rl n lo li i n)  ;COUNT NONCOINCIDENTAL POINTS$/;"	f
+nocoin	Drawsup.lsp	/^(defun nocoin (pl \/ rl n lo li i n)$/;"	f
 nocoin	Drawsup.lsp.bak.lsp	/^(defun nocoin (pl \/ rl n lo li i n)  ;COUNT NONCOINCIDENTAL POINTS$/;"	f
 printatt	erna_old.lsp	/^(defun printatt (n i sp)$/;"	f
 proline	erna_old.lsp	/^(defun proline (l cn 2f h n \/ hnl cc )$/;"	f
@@ -93,10 +93,10 @@ shtgen2	Drawsup.lsp	/^(defun shtgen2 (l x a3 a2 e2 e3 \/ y)$/;"	f
 shtgen2	Drawsup.lsp.bak.lsp	/^(defun shtgen2 (l x a3 a2 e2 e3 \/ y)$/;"	f
 shtgen2	beamplan.lsp	/^(defun shtgen2 (l x a3 a2 e2 e3 \/ y)     $/;"	f
 spins	Bsx.lsp	/^(defun spins (c) ;FUNCTION TO INSERT SPECIAL CHARACTERS @ FRACTIONS     $/;"	f
-spins	Drawsup.lsp	/^(defun spins (c) ;FUNCTION TO INSERT SPECIAL CHARACTERS @ FRACTIONS$/;"	f
+spins	Drawsup.lsp	/^(defun spins (c)$/;"	f
 spins	Drawsup.lsp.bak.lsp	/^(defun spins (c) ;FUNCTION TO INSERT SPECIAL CHARACTERS @ FRACTIONS $/;"	f
 spins	beamplan.lsp	/^(defun spins (c) ;FUNCTION TO INSERT SPECIAL CHARACTERS @ FRACTIONS     $/;"	f
-tend_cnt	Drawsup.lsp	/^(defun tend_cnt (ss pt1 pt2 \/ pl en cl)   ;FUNCTION TO LIST ALL VERTICES POINTS TO DETERMINE CH/;"	f
+tend_cnt	Drawsup.lsp	/^(defun tend_cnt (ss pt1 pt2 \/ pl en cl)$/;"	f
 tend_cnt	Drawsup.lsp.bak.lsp	/^(defun tend_cnt (ss pt1 pt2 \/ pl en cl)   ;FUNCTION TO LIST ALL VERTICES POINTS TO DETERMINE CH/;"	f
 tgtname	olddwg.lsp	/^(defun tgtname ()$/;"	f
 verify_arxapp_loaded	acadr14.lsp	/^(defun verify_arxapp_loaded (app) $/;"	f
