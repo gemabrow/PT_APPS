@@ -7,21 +7,42 @@
 !_TAG_PROGRAM_VERSION	0.0.0	/2258b24b/
 *merr*	acadr14.lsp	/^(defun *merr* (msg)$/;"	f
 *merrmsg*	acadr14.lsp	/^(defun *merrmsg* (msg)$/;"	f
+AirCargoProblem	my_air_cargo_problems.py	/^class AirCargoProblem(Problem):$/;"	c
 C:DDNUMB	autonumb.lsp	/^(defun C:DDNUMB (\/ CMD dcl_id1 olderr)$/;"	f
 C:gotourl	acadr14.lsp	/^(defun C:gotourl ( \/ ssurl url i)$/;"	f
 ERR	autonumb.lsp	/^(DEFUN ERR (S)				;if an error (such as CTRL-C)$/;"	f
 LispEd	acadr14.lsp	/^(defun LispEd (contents \/ fname dcl state)$/;"	f
+PgNode	my_planning_graph.py	/^class PgNode():$/;"	c
+PgNode_a	my_planning_graph.py	/^class PgNode_a(PgNode):$/;"	c
+PgNode_s	my_planning_graph.py	/^class PgNode_s(PgNode):$/;"	c
+PlanningGraph	my_planning_graph.py	/^class PlanningGraph():$/;"	c
+__eq__	my_planning_graph.py	/^    def __eq__(self, other):$/;"	m	class:PgNode_a
+__eq__	my_planning_graph.py	/^    def __eq__(self, other):$/;"	m	class:PgNode_s
+__hash__	my_planning_graph.py	/^    def __hash__(self):$/;"	m	class:PgNode_a
+__hash__	my_planning_graph.py	/^    def __hash__(self):$/;"	m	class:PgNode_s
+__init__	my_air_cargo_problems.py	/^    def __init__(self, cargos, planes, airports,$/;"	m	class:AirCargoProblem
+__init__	my_planning_graph.py	/^    def __init__(self):$/;"	m	class:PgNode
+__init__	my_planning_graph.py	/^    def __init__(self, action: Action):$/;"	m	class:PgNode_a
+__init__	my_planning_graph.py	/^    def __init__(self, problem: Problem, state: str, serial_planning=True):$/;"	m	class:PlanningGraph
+__init__	my_planning_graph.py	/^    def __init__(self, symbol: str, is_pos: bool):$/;"	m	class:PgNode_s
 _autoarxload	acadr14.lsp	/^(defun _autoarxload (app)$/;"	f
 _autoload	acadr14.lsp	/^(defun _autoload (app)$/;"	f
 _autoqload	acadr14.lsp	/^(defun _autoqload (quoi app cmdliste \/ qapp symnam)$/;"	f
 _autoxload	acadr14.lsp	/^(defun _autoxload (app)$/;"	f
 _default	Endview_modified.lsp	/^(defun _default (itm msg n s)$/;"	f
+_larger_inner_loop_	my_planning_graph.py	/^    def _larger_inner_loop_(self, larger, smaller):$/;"	m	class:PlanningGraph
 acad_helpdlg	acadr14.lsp	/^(defun acad_helpdlg (helpfile topic)$/;"	f
+actions	my_air_cargo_problems.py	/^    def actions(self, state: str) -> list:$/;"	m	class:AirCargoProblem
+add_action_level	my_planning_graph.py	/^    def add_action_level(self, level):$/;"	m	class:PlanningGraph
+add_literal_level	my_planning_graph.py	/^    def add_literal_level(self, level):$/;"	m	class:PlanningGraph
 ai_AppLoaded	acadr14.lsp	/^(defun ai_AppLoaded (appname apptype)$/;"	f
 ai_ffile	acadr14.lsp	/^(defun ai_ffile (app)$/;"	f
 ai_nofile	acadr14.lsp	/^(defun ai_nofile (filename)$/;"	f
 ainrloc	Endview.lsp	/^(defun ainrloc (rsl rd cw bw rc off \/ marg na rll spx) ;REBAR SPACE LIST, REBAR DIA. , COLUMN W/;"	f
 ainrloc	Endview_modified.lsp	/^(defun ainrloc (rsl rd cw bw rc off \/ marg _na rll spx) ;REBAR SPACE LIST, REBAR DIA. , COLUMN /;"	f
+air_cargo_p1	my_air_cargo_problems.py	/^def air_cargo_p1() -> AirCargoProblem:$/;"	f
+air_cargo_p2	my_air_cargo_problems.py	/^def air_cargo_p2() -> AirCargoProblem:$/;"	f
+air_cargo_p3	my_air_cargo_problems.py	/^def air_cargo_p3() -> AirCargoProblem:$/;"	f
 autoarxacedload	acadr14.lsp	/^(defun autoarxacedload (app cmdliste \/ qapp symnam)$/;"	f
 autoarxload	acadr14.lsp	/^(defun autoarxload (app cmdliste)$/;"	f
 autoload	acadr14.lsp	/^(defun autoload (app cmdliste)$/;"	f
@@ -45,8 +66,11 @@ c:pcxin	acadr14.lsp	/^(defun c:pcxin ()$/;"	f
 c:tiffin	acadr14.lsp	/^(defun c:tiffin ()$/;"	f
 cantdo	Endview.lsp	/^(defun cantdo ()$/;"	f
 cantdo	Endview_modified.lsp	/^(defun cantdo ()$/;"	f
+competing_needs_mutex	my_planning_graph.py	/^    def competing_needs_mutex(self, node_a1: PgNode_a, node_a2: PgNode_a) -> bool:$/;"	m	class:PlanningGraph
 count	Drawsup.lsp	/^(defun count (pl cl tp n) ;POINT LIST, COMPARISON LIST, TEST POINT, POINT COUNTER - HOLD TP CONS/;"	f
 count	Drawsup.lsp.bak.lsp	/^(defun count (pl cl tp n) ;POINT LIST, COMPARISON LIST, TEST POINT, POINT COUNTER - HOLD TP CONS/;"	f
+create_graph	my_planning_graph.py	/^    def create_graph(self):$/;"	m	class:PlanningGraph
+cross_intersection	my_planning_graph.py	/^    def cross_intersection(self, action_a: Action, action_b: Action,$/;"	m	class:PlanningGraph
 dimanch	Endview.lsp	/^(defun dimanch ()$/;"	f
 dimanch	Endview_modified.lsp	/^(defun dimanch ()$/;"	f
 dimspa	Bsx.lsp	/^(defun dimspa ()$/;"	f
@@ -64,28 +88,50 @@ drawspacingdim	Drawsup.lsp.bak.lsp	/^(defun drawspacingdim (ns d p1 p2 mode laye
 drawsup	Drawsup.lsp	/^(defun drawsup (pl1 pl2 pt1 pt2 h1 h2 s n f fh c lname \/ ncl)    ;nc - GLOBAL VARIABLE$/;"	f
 drawsup	Drawsup.lsp.bak.lsp	/^(defun drawsup (pl1 pl2 pt1 pt2 h1 h2 s n f fh c lname \/ ncl)    ;nc - GLOBAL VARIABLE$/;"	f
 drawtend	beamplan.lsp	/^(defun drawtend ()$/;"	f
+effect_s_nodes	my_planning_graph.py	/^    def effect_s_nodes(self):$/;"	m	class:PgNode_a
 fitstr2len	acadr14.lsp	/^(defun fitstr2len (str1 maxlen)$/;"	f
+fly_actions	my_air_cargo_problems.py	/^        def fly_actions():$/;"	f	member:AirCargoProblem.get_actions	file:
 genip	Bsx.lsp	/^(defun genip ()$/;"	f
 genip	beamplan.lsp	/^(defun genip ()$/;"	f
+get_actions	my_air_cargo_problems.py	/^    def get_actions(self):$/;"	m	class:AirCargoProblem
+goal_test	my_air_cargo_problems.py	/^    def goal_test(self, state: str) -> bool:$/;"	m	class:AirCargoProblem
+h_1	my_air_cargo_problems.py	/^    def h_1(self, node: Node):$/;"	m	class:AirCargoProblem
+h_ignore_preconditions	my_air_cargo_problems.py	/^    def h_ignore_preconditions(self, node: Node):$/;"	m	class:AirCargoProblem
+h_levelsum	my_planning_graph.py	/^    def h_levelsum(self) -> int:$/;"	m	class:PlanningGraph
+h_pg_levelsum	my_air_cargo_problems.py	/^    def h_pg_levelsum(self, node: Node):$/;"	m	class:AirCargoProblem
 imagefile	acadr14.lsp	/^(defun imagefile (filename \/ filedia-save cmdecho-save)$/;"	f
 import3ds	acadr14.lsp	/^(defun import3ds (filename \/ filedia_old render)$/;"	f
+inconsistent_effects_mutex	my_planning_graph.py	/^    def inconsistent_effects_mutex(self, node_a1: PgNode_a, node_a2: PgNode_a) -> bool:$/;"	m	class:PlanningGraph
+inconsistent_support_mutex	my_planning_graph.py	/^    def inconsistent_support_mutex(self, node_s1: PgNode_s, node_s2: PgNode_s):$/;"	m	class:PlanningGraph
 input	Bsx.lsp	/^(defun input ()$/;"	f
 input	Endview.lsp	/^(defun input ()$/;"	f
 input	Endview_modified.lsp	/^(defun input ()$/;"	f
 input	beamplan.lsp	/^(defun input ()$/;"	f
 input	olddwg.lsp	/^(defun input ()$/;"	f
+interference_mutex	my_planning_graph.py	/^    def interference_mutex(self, node_a1: PgNode_a, node_a2: PgNode_a) -> bool:$/;"	m	class:PlanningGraph
 intpt	Drawsup.lsp	/^(defun intpt (l fac i \/ x y)$/;"	f
 intpt	Drawsup.lsp.bak.lsp	/^(defun intpt (l fac i \/ x y)$/;"	f
 is_lead_byte	acadr14.lsp	/^(defun is_lead_byte(code)$/;"	f
+is_mutex	my_planning_graph.py	/^    def is_mutex(self, other) -> bool:$/;"	m	class:PgNode
 label	Bsx.lsp	/^(defun label ()$/;"	f
 label	beamplan.lsp	/^(defun label ()$/;"	f
 listatt	erna_old.lsp	/^(defun listatt ()$/;"	f
+load_actions	my_air_cargo_problems.py	/^        def load_actions():$/;"	f	member:AirCargoProblem.get_actions	file:
 loadedp	acadr14.lsp	/^(defun loadedp (app appset)$/;"	f
+mutexify	my_planning_graph.py	/^def mutexify(node1: PgNode, node2: PgNode):$/;"	f
+negation_mutex	my_planning_graph.py	/^    def negation_mutex(self, node_s1: PgNode_s, node_s2: PgNode_s) -> bool:$/;"	m	class:PlanningGraph
 nocoin	Drawsup.lsp	/^(defun nocoin (pl \/ rl n lo li i n)$/;"	f
 nocoin	Drawsup.lsp.bak.lsp	/^(defun nocoin (pl \/ rl n lo li i n)  ;COUNT NONCOINCIDENTAL POINTS$/;"	f
+noop_actions	my_planning_graph.py	/^    def noop_actions(self, literal_list):$/;"	m	class:PlanningGraph
+precond_s_nodes	my_planning_graph.py	/^    def precond_s_nodes(self):$/;"	m	class:PgNode_a
 printatt	erna_old.lsp	/^(defun printatt (n i sp)$/;"	f
 proline	erna_old.lsp	/^(defun proline (l cn 2f h n \/ hnl cc )$/;"	f
+result	my_air_cargo_problems.py	/^    def result(self, state: str, action: Action):$/;"	m	class:AirCargoProblem
 s::startup	acadr14.lsp	/^(defun s::startup ()$/;"	f
+serialize_actions	my_planning_graph.py	/^    def serialize_actions(self, node_a1: PgNode_a, node_a2: PgNode_a) -> bool:$/;"	m	class:PlanningGraph
+show	my_planning_graph.py	/^    def show(self):$/;"	m	class:PgNode
+show	my_planning_graph.py	/^    def show(self):$/;"	m	class:PgNode_a
+show	my_planning_graph.py	/^    def show(self):$/;"	m	class:PgNode_s
 shtgen1	Drawsup.lsp	/^(defun shtgen1 (l x a1 a2 e1 e2 \/ y)$/;"	f
 shtgen1	Drawsup.lsp.bak.lsp	/^(defun shtgen1 (l x a1 a2 e1 e2 \/ y)  $/;"	f
 shtgen1	beamplan.lsp	/^(defun shtgen1 (l x a1 a2 e1 e2 \/ y)$/;"	f
@@ -99,6 +145,9 @@ spins	beamplan.lsp	/^(defun spins (c) ;FUNCTION TO INSERT SPECIAL CHARACTERS @ F
 tend_cnt	Drawsup.lsp	/^(defun tend_cnt (ss pt1 pt2 \/ pl en cl)$/;"	f
 tend_cnt	Drawsup.lsp.bak.lsp	/^(defun tend_cnt (ss pt1 pt2 \/ pl en cl)   ;FUNCTION TO LIST ALL VERTICES POINTS TO DETERMINE CH/;"	f
 tgtname	olddwg.lsp	/^(defun tgtname ()$/;"	f
+unload_actions	my_air_cargo_problems.py	/^        def unload_actions():$/;"	f	member:AirCargoProblem.get_actions	file:
+update_a_mutex	my_planning_graph.py	/^    def update_a_mutex(self, nodeset):$/;"	m	class:PlanningGraph
+update_s_mutex	my_planning_graph.py	/^    def update_s_mutex(self, nodeset: set):$/;"	m	class:PlanningGraph
 verify_arxapp_loaded	acadr14.lsp	/^(defun verify_arxapp_loaded (app) $/;"	f
 wbatch	olddwg.lsp	/^(defun wbatch ()$/;"	f
 wscript	olddwg.lsp	/^(defun wscript ()$/;"	f
