@@ -20,14 +20,14 @@
 
   ;;GET MAX SUPPORT BAR SPACING FROM CONFIG FILE
   ;;OTHERWISE, DEFAULT TO 42 IF USER PROVIDES NO INPUT
-  (setq config_filepath (strcat (getvar 'dwgprefix) "\config.txt"))
-  (if (/= (findfile config_filepath) nil)
-    ((setq f (open config_filepath "r"))
-     (setq maxspa (read-line f))) ;if file exists, read in config
-    ((setq maxspa (getdist "Enter maximum support bar spacing [42\"]: "))
-     (if (= maxspa nil)
-       (setq maxspa 42)))) ;default to 42 maxspa
-
+  ;(setq config_filepath (strcat (getvar 'dwgprefix) "\config.txt"))
+  ;(if (/= (findfile config_filepath) nil)
+  ;  ((setq f (open config_filepath "r"))
+  ;   (setq maxspa (read-line f))) ;if file exists, read in config
+  ;  ((setq maxspa (getdist "Enter maximum support bar spacing [42\"]: "))
+  ;   (if (= maxspa nil)
+  ;     (setq maxspa 42)))) ;default to 42 maxspa
+  (setq maxspa 42)
   (setq a1 "100")
 
   (while (not (or (< (atoi a1) 50)
@@ -52,184 +52,183 @@
     (setq t_layer "BAND"))
 
   (command "layer" "T" t_layer "")  ;THAW AFFECTED LAYER
-  (setq continue "Y")
-  (while (or (= (strcase continue) "Y")
-             (= continue ""))
-
-  ;;DRAW FIRST SUPPORT LINE AT HIGHPOINT (OR GET POINTS IF LINE EXISTS)
-  (setq p1 (getpoint "Select both endpoints of support at first highpoint: "))
-  (setq p2 (getpoint))
-  (terpri)
-  (if (= (getvar "orthomode") 1) ;MAKE P2 ORTHO W/ RESPECT TO P1 IF ORTHOMODE IS ON
-    (if (< (abs (- (car p1 ) (car p2)))
-           (abs (- (cadr p1 ) (cadr p2))))
-      (setq p2 (list (car p1) (cadr p2)))
-      (setq p2 (list (car p2) (cadr p1)))))
-
-  (if (< (cadr p2)(cadr p1)) ;SORT P1 & P2 W/ RESPECT TO Y
-    (progn
-      (setq p p1)
-      (setq p1 p2)
-      (setq p2 p)))
-
-  (setq ss_tendon (ssget "F" (list p1 p2) '((-4 . "<AND")
-                                            (-4 . "<OR")
-                                            (0 . "POLYLINE")
-                                            (0 . "LWPOLYLINE")
-                                            (-4 . "OR>")
-                                            (-4 . "<OR")
-                                            (8 . "UNIFORM")
-                                            (8 . "BAND")
-                                            (-4 . "OR>")
-                                            (-4 . "AND>"))))
-  (command "layer" "T" (strcat t_layer "_sup") "")
-  (setvar "CLAYER" (strcat t_layer "_sup"))
-  (if (ssget "F" (list p1 p2) '((-4 . "<AND")
-                                (-4 . "<OR")
-                                (0 . "POLYLINE")
-                                (0 . "LWPOLYLINE")
-                                (-4 . "OR>")
-                                (-4 . "<OR")
-                                (8 . "UNIFORM_SUP")
-                                (8 . "BAND_SUP")
-                                (-4 . "OR>")
-                                (-4 . "AND>"))) ;DON"T DRAW LINE IF ALREADY EXISTS
-    (setq bsup_exist 'Y))
-
+  (setq continue_profile "Y")
   (setq hp1 (getreal "Enter first highpoint cgs in inches: "))
   (setq lp (getreal "Enter lowpoint cgs in inches if required, else return: "))
-
-  ;;GET SS OF TENDONS INTERSECTING SUPPORT LINE
-  (if (/= ss_tendon nil)
-    (setq nc (tend_cnt ss_tendon p1 p2))
-    (progn
-      (alert "NO TENDONS FOUND ON THE UNIFORM OR BAND LAYERS - PROGRAM CANCELED")
-      (exit)))
-
-  ;;DETERMINE CHAIR QUANTITY
-  (setq nc (strcat "(" (itoa nc) ")"))
   (setq hp2 (getreal "Enter second highpoint cgs in inches: "))
-  (setq p3 (getpoint "Select both endpoints of support at second highpoint: "))
-  (setq p4 (getpoint))
-  (terpri)
-  (if (= (getvar "orthomode") 1) ;MAKE P4 ORTHO W/ RESPECT TO P3 IF ORTHOMODE IS ON
-    (if (< (abs (- (car p3) (car p4))) (abs (- (cadr p3 ) (cadr p4))))
-      (setq p4 (list (car p3) (cadr p4)))
-      (setq p4 (list (car p4) (cadr p3)))))
 
-  (if (< (cadr p4)(cadr p3)) ;SORT P1 & P2 W/ RESPECT TO Y
+  (while (/= continue_profile "N")
+
+    ;;DRAW FIRST SUPPORT LINE AT HIGHPOINT (OR GET POINTS IF LINE EXISTS)
+    (setq p1 (getpoint "Select both endpoints of support at first highpoint: "))
+    (setq p2 (getpoint))
+    (terpri)
+    (if (= (getvar "orthomode") 1) ;MAKE P2 ORTHO W/ RESPECT TO P1 IF ORTHOMODE IS ON
+      (if (< (abs (- (car p1 ) (car p2)))
+             (abs (- (cadr p1 ) (cadr p2))))
+        (setq p2 (list (car p1) (cadr p2)))
+        (setq p2 (list (car p2) (cadr p1)))))
+
+    (if (< (cadr p2)(cadr p1)) ;SORT P1 & P2 W/ RESPECT TO Y
+      (progn
+        (setq p p1)
+        (setq p1 p2)
+        (setq p2 p)))
+
+    (setq ss_tendon (ssget "F" (list p1 p2) '((-4 . "<AND")
+                                              (-4 . "<OR")
+                                              (0 . "POLYLINE")
+                                              (0 . "LWPOLYLINE")
+                                              (-4 . "OR>")
+                                              (-4 . "<OR")
+                                              (8 . "UNIFORM")
+                                              (8 . "BAND")
+                                              (-4 . "OR>")
+                                              (-4 . "AND>"))))
+    (command "layer" "T" (strcat t_layer "_sup") "")
+    (setvar "CLAYER" (strcat t_layer "_sup"))
+    (if (ssget "F" (list p1 p2) '((-4 . "<AND")
+                                  (-4 . "<OR")
+                                  (0 . "POLYLINE")
+                                  (0 . "LWPOLYLINE")
+                                  (-4 . "OR>")
+                                  (-4 . "<OR")
+                                  (8 . "UNIFORM_SUP")
+                                  (8 . "BAND_SUP")
+                                  (-4 . "OR>")
+                                  (-4 . "AND>"))) ;DON"T DRAW LINE IF ALREADY EXISTS
+      (setq bsup_exist 'Y))
+
+    ;;GET SS OF TENDONS INTERSECTING SUPPORT LINE
+    (if (/= ss_tendon nil)
+      (setq nc (tend_cnt ss_tendon p1 p2))
+      (progn
+        (alert "NO TENDONS FOUND ON THE UNIFORM OR BAND LAYERS - PROGRAM CANCELED")
+        (exit)))
+
+    ;;DETERMINE CHAIR QUANTITY
+    (setq nc (strcat "(" (itoa nc) ")"))
+    (setq p3 (getpoint "Select both endpoints of support at second highpoint: "))
+    (setq p4 (getpoint))
+    (terpri)
+    (if (= (getvar "orthomode") 1) ;MAKE P4 ORTHO W/ RESPECT TO P3 IF ORTHOMODE IS ON
+      (if (< (abs (- (car p3) (car p4))) (abs (- (cadr p3 ) (cadr p4))))
+        (setq p4 (list (car p3) (cadr p4)))
+        (setq p4 (list (car p4) (cadr p3)))))
+
+    (if (< (cadr p4)(cadr p3)) ;SORT P1 & P2 W/ RESPECT TO Y
+      (progn
+        (setq p p3)
+        (setq p3 p4)
+        (setq p4 p)))
+
+    (if (ssget "F" (list p3 p4) '((-4 . "<AND")
+                                  (-4 . "<OR")
+                                  (0 . "POLYLINE")
+                                  (0 . "LWPOLYLINE")
+                                  (0 . "LINE")
+                                  (-4 . "OR>")
+                                  (-4 . "<OR")
+                                  (8 . "UNIFORM_SUP")
+                                  (8 . "BAND_SUP")
+                                  (-4 . "OR>")
+                                  (-4 . "AND>"))) ;DON'T DRAW LINE IF ALREADY EXISTS
+      (setq esup_exist 'Y)
+    )
+
+    ;;DETERMINE CORRESPONDING ENDPOINTS
+    (if (< (distance p1 p3)(distance p1 p4))
+      (progn
+        (setq epl1 (list p1 p3))
+        (setq epl2 (list p2 p4)))
+      (progn
+        (setq epl1 (list p1 p4))
+        (setq epl2 (list p2 p3))))
+
+    ;;DETERMINE DIM-MODE
+    (setq mode "aligned")
+    (cond
+      ((= (cadr (nth 0 epl1)) (cadr (nth 1 epl1)))
+        (setq mode "hor"))
+      ((= (car (nth 0 epl1)) (car (nth 1 epl1)))
+        (setq mode "vert")))
+
+    ;;DETERMINE END OF GREATEST DISTANCE
+    (setq l1 (distance (car epl1) (cadr epl1)))
+    (setq l2 (distance (car epl2) (cadr epl2)))
+    (if (< l1 l2)
+      (setq l l2)
+      (setq l l1))
+
+    ;;DETERMINE NO. OF SPACES
+    (if (= lp nil)
+      (progn
+        (setq ns (/ l maxspa))
+        (if (> (- ns (fix ns)) 0.01)
+          (setq ns (1+ (fix ns)))
+          (setq ns (fix ns)))
+        (princ ns)
+
+        ;;GENERATE ENDPOINTS OF SUPPORT BARS & DRAW
+        (if (= bsup_exist 'N)
+          (drawsup nil nil p1 p2 nil nil nil nil nil hp1 'cant t_layer))
+        (setq bsup_exist 'N)
+        (setq spacing (/ l1 ns)) ;USE l1 TO DETERMINE SPACING TO DETERMINE CHAIR HEIGHTS
+        (setq fact (/ 1.0 ns))
+        (setq n 1)
+
+        (while (< n ns)   ;CANTILEVER SLAB
+          ;AM NOT PASSING HIGH OR LOW POINT
+          (drawsup epl1 epl2 nil nil hp1 hp2 spacing n fact nil 'cant t_layer)
+          (setq n (1+ n)))
+
+        (if (= esup_exist 'N)
+          (drawsup nil nil p3 p4 nil nil nil nil nil hp2 'cant t_layer))
+        (setq esup_exist 'N)
+        (drawspacingdim ns l1 (nth 0 epl2) (nth 1 epl2) mode t_layer))
+
+      (progn
+        (if (= bsup_exist 'N)
+          (drawsup nil nil p1 p2 nil nil nil nil nil hp1 nil t_layer))
+        (setq bsup_exist 'N)
+        (setq ns (/ (/ l 2.0) maxspa))
+        (if (> (- ns (fix ns)) 0.01)
+          (setq ns (1+ (fix ns)))
+          (setq ns (fix ns)))
+        (princ ns)
+        (setq fact (/ 1.0 ns))
+        (setq spacing (/ (/ l1 2.0) ns)) ;USE l1 TO DETERMINE SPACING TO DETERMINE CHAIR HEIGHTS
+        (setq p5 (intpt epl1 0.5 1))   ;ENDPOINTS AT LOWPOINT
+        (setq p6 (intpt epl2 0.5 1))
+        (setq epl3 (list (car epl1) p5))
+        (setq epl4 (list (car epl2) p6))
+        (setq n 1)
+
+        ;; SLAB W/ LOWPOINT
+        (while (< n ns)
+          ;AM NOT PASSING HIGH OR LOW POINT
+          (drawsup epl3 epl4 nil nil hp1 lp spacing n fact nil nil t_layer)
+          (setq n (1+ n)))
+
+        (drawsup nil nil p5 p6 nil nil nil nil nil lp nil t_layer)  ;LABEL LOWPOINT
+        (setq epl5 (list p5 (cadr epl1)))
+        (setq epl6 (list p6 (cadr epl2)))
+        (setq n 1)
+
+        ;; SLAB W/ LOWPOINT
+        (while (< n ns)
+          ;AM NOT PASSING HIGH OR LOW POINT
+          (drawsup epl5 epl6 nil nil lp hp2 spacing n fact nil nil t_layer)
+          (setq n (1+ n)))
+
+        (if (= esup_exist 'N)
+          (drawsup nil nil p3 p4 nil nil nil nil nil hp2 nil t_layer))
+        (setq esup_exist 'N)
+        (drawspacingdim (* 2 ns) l1 (nth 0 epl2) (nth 1 epl2) mode t_layer)))
+
     (progn
-      (setq p p3)
-      (setq p3 p4)
-      (setq p4 p)))
-
-  (if (ssget "F" (list p3 p4) '((-4 . "<AND")
-                                (-4 . "<OR")
-                                (0 . "POLYLINE")
-                                (0 . "LWPOLYLINE")
-                                (0 . "LINE")
-                                (-4 . "OR>")
-                                (-4 . "<OR")
-                                (8 . "UNIFORM_SUP")
-                                (8 . "BAND_SUP")
-                                (-4 . "OR>")
-                                (-4 . "AND>"))) ;DON'T DRAW LINE IF ALREADY EXISTS
-    (setq esup_exist 'Y)
-  )
-
-  ;;DETERMINE CORRESPONDING ENDPOINTS
-  (if (< (distance p1 p3)(distance p1 p4))
-    (progn
-      (setq epl1 (list p1 p3))
-      (setq epl2 (list p2 p4)))
-    (progn
-      (setq epl1 (list p1 p4))
-      (setq epl2 (list p2 p3))))
-
-  ;;DETERMINE DIM-MODE
-  (setq mode "aligned")
-  (cond
-    ((= (cadr (nth 0 epl1)) (cadr (nth 1 epl1)))
-      (setq mode "hor"))
-    ((= (car (nth 0 epl1)) (car (nth 1 epl1)))
-      (setq mode "vert")))
-
-  ;;DETERMINE END OF GREATEST DISTANCE
-  (setq l1 (distance (car epl1) (cadr epl1)))
-  (setq l2 (distance (car epl2) (cadr epl2)))
-  (if (< l1 l2)
-    (setq l l2)
-    (setq l l1))
-
-  ;;DETERMINE NO. OF SPACES
-  (if (= lp nil)
-    (progn
-      (setq ns (/ l maxspa))
-      (if (> (- ns (fix ns)) 0.01)
-        (setq ns (1+ (fix ns)))
-        (setq ns (fix ns)))
-      (princ ns)
-
-      ;;GENERATE ENDPOINTS OF SUPPORT BARS & DRAW
-      (if (= bsup_exist 'N)
-        (drawsup nil nil p1 p2 nil nil nil nil nil hp1 'cant t_layer))
-      (setq bsup_exist 'N)
-      (setq spacing (/ l1 ns)) ;USE l1 TO DETERMINE SPACING TO DETERMINE CHAIR HEIGHTS
-      (setq fact (/ 1.0 ns))
-      (setq n 1)
-
-      (while (< n ns)   ;CANTILEVER SLAB
-        ;AM NOT PASSING HIGH OR LOW POINT
-        (drawsup epl1 epl2 nil nil hp1 hp2 spacing n fact nil 'cant t_layer)
-        (setq n (1+ n)))
-
-      (if (= esup_exist 'N)
-        (drawsup nil nil p3 p4 nil nil nil nil nil hp2 'cant t_layer))
-      (setq esup_exist 'N)
-      (drawspacingdim ns l1 (nth 0 epl2) (nth 1 epl2) mode t_layer))
-
-    (progn
-      (if (= bsup_exist 'N)
-        (drawsup nil nil p1 p2 nil nil nil nil nil hp1 nil t_layer))
-      (setq bsup_exist 'N)
-      (setq ns (/ (/ l 2.0) maxspa))
-      (if (> (- ns (fix ns)) 0.01)
-        (setq ns (1+ (fix ns)))
-        (setq ns (fix ns)))
-      (princ ns)
-      (setq fact (/ 1.0 ns))
-      (setq spacing (/ (/ l1 2.0) ns)) ;USE l1 TO DETERMINE SPACING TO DETERMINE CHAIR HEIGHTS
-      (setq p5 (intpt epl1 0.5 1))   ;ENDPOINTS AT LOWPOINT
-      (setq p6 (intpt epl2 0.5 1))
-      (setq epl3 (list (car epl1) p5))
-      (setq epl4 (list (car epl2) p6))
-      (setq n 1)
-
-      ;; SLAB W/ LOWPOINT
-      (while (< n ns)
-        ;AM NOT PASSING HIGH OR LOW POINT
-        (drawsup epl3 epl4 nil nil hp1 lp spacing n fact nil nil t_layer)
-        (setq n (1+ n)))
-
-      (drawsup nil nil p5 p6 nil nil nil nil nil lp nil t_layer)  ;LABEL LOWPOINT
-      (setq epl5 (list p5 (cadr epl1)))
-      (setq epl6 (list p6 (cadr epl2)))
-      (setq n 1)
-
-      ;; SLAB W/ LOWPOINT
-      (while (< n ns)
-        ;AM NOT PASSING HIGH OR LOW POINT
-        (drawsup epl5 epl6 nil nil lp hp2 spacing n fact nil nil t_layer)
-        (setq n (1+ n)))
-
-      (if (= esup_exist 'N)
-        (drawsup nil nil p3 p4 nil nil nil nil nil hp2 nil t_layer))
-      (setq esup_exist 'N)
-      (drawspacingdim (* 2 ns) l1 (nth 0 epl2) (nth 1 epl2) mode t_layer)))
-
-  (progn
-    (initget "Y y N n")
-    (setq continue (getkword "Continue program ? [Y or N] ")))) ;END WHILE
+      (initget "Y y N n")
+      (setq continue_profile (getkword "Continue profile? [Y or N] ")))) ;END WHILE
   (setvar "attdia" 1))
 
 (defun drawspacingdim (ns d p1 p2 mode layer)
@@ -242,9 +241,9 @@
      (setq off "(-)"))
     (T (setq off "")))
   (setq sdim (strcat (itoa ns) " SPA @ " s off))
-  (setq dimloc (list (car p1) (+ (cadr p1) 72.0)))
+  (setq dimloc (list (car p1) (+ (cadr p1) 60.0)))
   (if (/= (cadr p1) (cadr p2))
-    (setq dimloc (list (+ (car p1) 72.0) (cadr p1))))
+    (setq dimloc (list (+ (car p1) 60.0) (cadr p1))))
   (command "dim" mode p2 p1 dimloc sdim "e"))
 
 (defun drawsup (pl1 pl2 pt1 pt2 h1 h2 s n f fh c lname / ncl)    ;nc - GLOBAL VARIABLE
@@ -299,11 +298,26 @@
           (setq nc "(3)")
           (setq bn "C:/apps/PT_CAD/rebar/bndsup60.dwg"))
         ((and (> dx2 60.0) (<= dx2 72.0))
-          (setq nc "(3)")
+          (setq nc "(4)")
           (setq bn "C:/apps/PT_CAD/rebar/bndsup72.dwg"))
         ((and (> dx2 72.0) (<= dx2 84.0))
-          (setq bn "C:/apps/PT_CAD/rebar/bndsup84.dwg")
-          (setq nc "(4)")))
+          (setq nc "(4)")
+          (setq bn "C:/apps/PT_CAD/rebar/bndsup84.dwg"))
+        ((and (> dx2 84.0) (<= dx2 96.0))
+          (setq nc "(5)")
+          (setq bn "C:/apps/PT_CAD/rebar/bndsup96.dwg"))
+        ((and (> dx2 96.0) (<= dx2 108.0))
+          (setq nc "(5)")
+          (setq bn "C:/apps/PT_CAD/rebar/bndsup_108.dwg"))
+        ((and (> dx2 108.0) (<= dx2 120.0))
+          (setq nc "(5)")
+          (setq bn "C:/apps/PT_CAD/rebar/bndsup_120.dwg"))
+        ((and (> dx2 120.0) (<= dx2 132.0))
+          (setq nc "(6)")
+          (setq bn "C:/apps/PT_CAD/rebar/bndsup_132.dwg"))
+        ((and (> dx2 132.0) (<= dx2 144.0))
+          (setq nc "(6)")
+          (setq bn "C:/apps/PT_CAD/rebar/bndsup_144.dwg")))
       (if (/= bn nil)
         (command "insert" bn bip "" ""  bad)
         (progn
