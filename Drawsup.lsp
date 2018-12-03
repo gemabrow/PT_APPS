@@ -18,6 +18,7 @@
   (setq bsup_exist 'N) ;FLAG FOR EXISTING BEGINNING SUPPORT
   (setq esup_exist 'N) ;FLAG FOR EXISTING ENDING SUPPORT
 
+  (setq maxspa 42) ;Auto-default to 42 until config file is supported.
   ;;GET MAX SUPPORT BAR SPACING FROM CONFIG FILE
   ;;OTHERWISE, DEFAULT TO 42 IF USER PROVIDES NO INPUT
   ;(setq config_filepath (strcat (getvar 'dwgprefix) "\config.txt"))
@@ -27,19 +28,19 @@
   ;  ((setq maxspa (getdist "Enter maximum support bar spacing [42\"]: "))
   ;   (if (= maxspa nil)
   ;     (setq maxspa 42)))) ;default to 42 maxspa
-  (setq maxspa 42)
-  (setq a1 "100")
 
-  (while (not (or (< (atoi a1) 50)
-                  (= (strcase a1) "H")))
-    (setq a1 (getstring "\nEnter N value (L/N) to locate inflection point,\
-                         \ 0 for simple parabola [10]: "))
-    (if (= a1  "")
-      (setq a1 "10")))
-
-  (setq a1 (atof a1))
-  (if (/= a1 0.0)
-    (setq a1 (/ 1.0 a1)))
+  ; Set N value to default of 0.1
+  (setq a1 0.1)
+  ;(setq a1 "100")
+  ;(while (not (or (< (atoi a1) 50)
+  ;                (= (strcase a1) "H")))
+  ;  (setq a1 (getstring "\nEnter N value (L/N) to locate inflection point,\
+  ;                       \ 0 for simple parabola [10]: "))
+  ;  (if (= a1  "")
+  ;    (setq a1 "10")))
+  ;(setq a1 (atof a1))
+  ;(if (/= a1 0.0)
+  ;  (setq a1 (/ 1.0 a1)))
 
   ;USER INPUT TO DETERMINE SUPPORT METHOD AT LOWPOINT
   (initget 1 "c C s S")
