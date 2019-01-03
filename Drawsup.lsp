@@ -287,7 +287,7 @@
       (setq bip (list (+ (car barep1)(* d (cos a)))(+ (cadr barep1) (* d (sin a)))))
       (cond
         ((<= dx2 24.0)
-          (setq nc " ")
+          (setq nc "(2)")
           (setq bn "C:/Apps/PT_CAD/REBAR/BNDSUP24.dwg"))
         ((and (> dx2 24.0) (<= dx2 36.0))
           (setq nc "(3)")
