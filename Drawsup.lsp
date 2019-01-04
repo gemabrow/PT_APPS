@@ -281,7 +281,6 @@
   (if (= t_layer "UNIFORM")
     (command "line" barep1 barep2 "")  ;DRAW UNIFORM SUPPORTS
     (progn    ;DRAW BAND SUPPORTS
-      (setq bandass (list '(1 24.0 2) '(2 24.0 2) '(3 36.0 2) '(4 48.0 3) '(5 60.0 3) '(6 72.0 4) '(7 84.0 4)))
       (setq dx2 (* d 2.0))
       (setq bn nil)
       (setq bip (list (+ (car barep1)(* d (cos a)))(+ (cadr barep1) (* d (sin a)))))
