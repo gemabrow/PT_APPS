@@ -1,14 +1,58 @@
-(defun c:endview ()
-                   
+(defun _default (itm msg n s)
+	(setq f (cond
+                      ( (= n 1) getint)
+                      ( (= n 2) getstring)
+                      ( (= n 3) getkword))
+              )
+      	(setq itmstr itm);<	
+	(if (null s)(initget (if itm 2 3)))
+	(setq itm
+	  (cond
+	    ( (f
+	        (strcat
+	          "\n" msg
+	          (if itm (strcat " <" (vl-princ-to-string itm) ">") "")
+	            
+	          ": "
+	        )
+	      )
+	    )
+	    (itm)
+	  )
+	)
+	(if (and (= n 2)(eq itm "")) itmstr itm)
+)
 
-   ;(setvar "osmode" 0)
-   (setq prev_layer (getvar "CLAYER"))
+
+(foreach  Var  '((ST . 5)  (SJ . "C") (BD . 35)
+              (BW . 18) (TW . 18) (DIMTOP . "T")
+              (CGS . 25) (NA . "8S")
+              (COLSHAPE . "R")  (COLSIZE . 24)
+              (EVEN . "Y") (COLJUST . "C")
+              (BARS . "3#8"))
+      (if (setq x (eval (car var)))
+            (set (car var) x)
+            (set (car var) (cdr var))
+            )
+      )
+
+(defun c:endview ()
+   (setq prev_osmode (getvar "OSMODE"))   
+   (setq prev_layer (getvar "CLAYER"))   
+   (setvar "osmode" 0)
    (setvar "cmdecho" 0)
-   (setq sf 8)   ;SET SCALE MULTIPLE
+   (setvar "attreq" 1)   
+
+      
+   (setq sf 8)   ;SET SCALE MULTIPLEEnter beam width at bottom of beam in inches:
    (setq cover 1.5) ;SET CONCRETE COVER FOR ANCHORS
    (setq rebcov 2.0) ;SET CONCRETE COVER FOR REBAR AT COLUMNS
    (setq minopen 2.5) ;SET WIDTH OF MIN. OPEN FOR ANCHOR IN REBAR
    (setq anchout 3) ;DEFAULT DIST ANCHOR CAN LIE OUTSIDE BEAM SIDE
+
+      
+
+      
    (command "-LAYER" "T" "ENDVIEW" "ON" "ENDVIEW" "")
    (setvar "CLAYER" "ENDVIEW")
    (setq ss (ssadd)) ;SET SS TO NULL SELECTION SET 
@@ -22,69 +66,72 @@
    (drawanch)
    (dimanch)
    (command "scale" ss "" ll sf)
+   (setvar "osmode" prev_osmode) ;restore previous osmode
    (setvar "CLAYER" prev_layer) ;restore active layer
 )
 
 (defun input ()
    (setq atl '("D" "S" "I" "U")) 
-   (setq dimtop "B")
-   (setq st (getreal "\nEnter slab thickness, return if none: "))
+   ;; (setq dimtop "B")
+   (setq st (getreal "\nEnter slab thickness, return if none: "));; < I skip this because a nil response is accepted
    (if (/= st nil)  ;LOCATE SLAB W/ RESPECT TO BEAM
       (progn
-         (initget 1 "L l R r C c")
-         (setq sj (getkword "\nEnter L[left], R[right] or C[centered] to locate slab with respect to beam: "))
+         (initget  "L R C")
+         (setq sj (_default sj "Choose  [Left/Right/Centered] to locate slab with respect to beam" 3 t))
       )
       (setq st 0.0)  ;SET st TO 0 IF SLAB NOT PRESENT
    )
-   (setq bd (getreal "\nEnter beam depth from top of slab in inches: "))   
-   (setq bw (getreal "\nEnter beam width at bottom of beam in inches: "))
-   (setq tw (getreal "\nEnter beam width at top of beam in inches, return if same as bottom: "))
+(setq bd (_default bd "Enter beam depth from top of slab in inches" 1 nil))
+(setq bw (_default bw "Enter beam width at bottom of beam in inches" 1 nil))
+        
+   (setq tw (getreal "\nEnter beam width at top of beam in inches, return if same as bottom: ")) ;; < I skip this because a nil response is accepted
    (if (= tw nil) 
        (setq tw bw)
        (progn
-          (initget "T t B b")
-          (setq dimtop (getkword "Enter T if top beam width is at top of slab, B if at bottom of slab: "))
+          (initget "T B")
+          (princ "\nT for if top beam width is at top of slab / B if at bottom of slabs")
+          (setq dimtop (_default dimtop "Enter [Top/Bottom]" 3 t))         
        )
    )
-   (setq cgs (getreal "Enter the height of the cgs above beam bottom in inches: "))
-   (if (> cgs (- bd (/ st 2.0)))
-       (progn
-           (alert "Given CGS can not be attained")
-           (setq cgs (getreal "Please reenter the height of the cgs above beam bottom in inches or return to cancel program: "))
-           (if (= cgs nil) (exit))
-       )
-   )
+(while (progn      
+   		(setq cgs (_default cgs "Enter the height of the cgs above beam bottom in inches" 1 nil))   
+   		(> cgs (- bd (/ st 2.0)))
+             )
+      (alert "Given CGS can not be attained")
+      )             
    (prompt "\nEnter the total number of anchors required w/ suffix to indicate type - ")
-   (setq na (getstring "\n[D=deadend, S=stressend, I=intermediate or U=unspecified] eg - 8D: "))
-   (setq at (strcase (substr na (strlen na) 1)))
-   (while (not (member at atl))
-       (prompt "\nIncorrect anchor type - Please enter the total number of anchors required w/ suffix to indicate type - ")
-       (setq na (getstring "\n[D=deadend, S=stressend, I=intermediate or U=unspecified] eg - 8D: "))
-       (setq at (strcase (substr na (strlen na) 1)))
-   )
-   (setq na (atoi (substr na 1 (1- (strlen na)))))
+(while
+      (progn
+   	(setq na (_default na "[D=deadend, S=stressend, I=intermediate or U=unspecified] eg - 8D" 2 T))
+        (setq at (strcase (substr na (strlen na) 1)))
+        (not (member at atl)))
+      (prompt "\nIncorrect anchor type - Please enter the total number of anchors required w/ suffix to indicate type - ")
+      )
+
+   (setq na_ (atoi (substr na 1 (1- (strlen na)))))
    
                                     ;;;;;;;   ENTER COLUMN REBAR INPUT  ;;;;;;;
 
    
-   (initget "R r C c")
+   (initget "R C")   	
    (setq colshape (getkword "\nEnter R or C to designate rectangular or circular column, return if none: "))
    (if (/= colshape nil)
       (progn    
          (if (= (strcase colshape) "C")
-             (setq colsize (getreal "Enter column diameter in decimal inches: "))
-             (setq colsize (getreal "Enter size of column face at beam end in decimal inches: "))
+             (setq colsize (_default colsize "Enter column diameter in decimal inches" 1 nil))
+             (setq colsize (_default colsize "Enter size of column face at beam end in decimal inches" 1 nil))
          )
-         (initget "Y y N n")
-         (setq even (getkword "\nIs column vertical rebar evenly spaced? [Y or N]: "))  
-         (initget "C c L l R r O o")
-         (setq coljust (getkword "\nHow is column located w/ respect to beam [C=centered, L=left justified, R=right justified or O=offset]: "))
+         
+         (initget "Y N")
+         (setq even (_default even "Is column vertical rebar evenly spaced? [Yes/No]" 3 t))
+         (initget "C L R O")
+         (setq coljust (_default coljust "How is column located w/ respect to beam [Centered/Left justified/Right justified/Offset]" 3 t))         
          (if (= (strcase coljust) "O")
-             (setq offset (getreal "Enter amount column is offset to right of beam in decimal inches [offset to left as negative no.]: "))
+             (setq offset (_default offset "Enter amount column is offset to right of beam in decimal inches [offset to left as negative no.]" 1 nil))             
          )
          (if (= (strcase even) "Y")
-             (setq bars (getstring "Enter rebar quantity & size at rectangular column face or total no. of bars for circular column [eg 3#7]: "))
-             (setq bars (getstring "Enter rebar quantity & size for side of column at beam end only[eg 5#7]: "))
+             (setq bars (_default bars "Enter rebar quantity & size at rectangular column face or total no. of bars for circular column [eg 3#7]: " 2 t))
+             (setq bars (_default bars "Enter rebar quantity & size for side of column at beam end only[eg 5#7]: " 2 t))
          ) 
          (setq rn (substr bars 1 1)) ;INITIALIZE REBAR NO.
          (setq nc 2)
@@ -112,14 +159,14 @@
          (setq respal '())
          (if (= (strcase even) "N")
             (progn
-                (setq s (getreal "\nEnter distance from left edge of column to centerline of leftmost vert. bar: "))
+                (setq s (_default s "Enter distance from left edge of column to centerline of leftmost vert. bar" 1 nil))
                 (setq s (- s rebcov (/ rebsize 2)))
                 (setq respal (cons s respal))          
                 (setq n 1)
                 (while (< n rn)
                    (setq p (strcat "\nEnter spacing from left to right between bars " (itoa n) " and " (itoa (1+ n)) ": "))   
                    (prompt p)
-                   (setq s (getreal))
+			(setq s (_default s "Enter distance from left edge of column to centerline of leftmost vert. bar" 1 nil))
                    (setq respal (cons s respal))
                    (setq n (1+ n))
                 )
@@ -313,7 +360,7 @@
             (cantdo)
          )
          (setq clear 'ok)
-         (setq nfix na)
+         (setq nfix na_)
          (alert "OPENINGS IN COLUMN REBAR TOO SMALL TO ALLOW ANCHOR INSTALLATION - ALL ANCHORS INSTALLED IN SLAB")
       )
       (progn           
@@ -337,7 +384,7 @@
          )    
       )
       (if (/= nc 0)      
-         (setq nr (/ (- na nfix) (float nc)))  ;FIND NO. OF ROWS
+         (setq nr (/ (- na_ nfix) (float nc)))  ;FIND NO. OF ROWS
          (setq nr 0)
       )
       (if (/= nr (fix nr))
@@ -361,8 +408,8 @@
       )   
 
            ;FIND DISTANCE FROM BOTTOM OF BEAM TO FIRST ROW OF ANCHORS
-      (if (/= na nfix)
-         (setq yab (/ (- (* cgs na)(* vs nc mult)(* yfix nfix)) (- na nfix)))
+      (if (/= na_ nfix)
+         (setq yab (/ (- (* cgs na_)(* vs nc mult)(* yfix nfix)) (- na_ nfix)))
          (setq yab yfix)
       )
          ;(princ "\nna = ")(princ na)
@@ -649,7 +696,7 @@
    )      
 ) ;END DRAWANCH       
                                           ;;;DETERMINE ANCHOR IN REBAR LOCATION
-(defun ainrloc (rsl rd cw bw rc off / marg na rll spx) ;REBAR SPACE LIST, REBAR DIA. , COLUMN WIDTH, BEAM WIDTH, REBAR COVER, HOR DIST FROM LL TO CL,
+(defun ainrloc (rsl rd cw bw rc off / marg _na rll spx) ;REBAR SPACE LIST, REBAR DIA. , COLUMN WIDTH, BEAM WIDTH, REBAR COVER, HOR DIST FROM LL TO CL,
    (setq rll '())  ;INITIALIZE REBAR LOCATION LIST                                                SUM OF PREV. SPACINGS
            (setq ro (+ (- bw cw) off)) ;DETERMINE RIGHT OVERHANG OF BEAM IF ANY
            (if (> ro 0.0)
@@ -675,30 +722,30 @@
                     ;(princ "\nRSL = ")(princ RSL)
            (while (< n l)
               (setq cs (nth n rsl))  ;INITIALIZE CURRENT SPACING
-              (setq na 0)
+              (setq _na 0)
               (if (>= (- cs rd)  minopen)
                  (progn             
                      (setq na1 (1+ (fix (/ (- cs rd 2.25) 3.0))))
                      (setq na2 (1+ (fix (/ (- cs rd 2.25) 2.5))))                 
                      (if (> na2 na1) ;DETERMINE NO. OF ANCHORS AND SPACING FOR A GIVEN OPENING IN REBAR
                         (progn
-                           (setq na na2)
+                           (setq _na na2)
                            (setq s 2.5)
                         )
                         (progn
-                           (setq na na1)
+                           (setq _na na1)
                            (setq s 3.0)
                         )
                      )
                  )
               )
-              (setq centfac (/ (- (- cs rd) (* na s)) 2.0)) ;COMPUTE CENTERING FACTOR
+              (setq centfac (/ (- (- cs rd) (* _na s)) 2.0)) ;COMPUTE CENTERING FACTOR
                        ;(princ "\nCentering Factor = ")(princ centfac)
                        ;(princ "\nCS = ")(princ cs)
                        ;(princ "\nS = ")(princ s)
               (setq i 0)
                      ;(princ "\nna = ")(princ na)
-              (while (and (< i na) (/= na 0))
+              (while (and (< i _na) (/= _na 0))
                  (setq x (+ marg sps (* i s) (/ rd 2.0) (/ s 2.0) centfac)) ;DIST FROM LL TO ANCHOR INS. POINT
                  (setq rll (cons x rll))                   
                  (setq i (1+ i))
@@ -720,14 +767,16 @@
 )          
              
 (defun dimanch ()
-   (setq ds (getvar "dimstyle"))
-   (command "dim1" "restore" "tick8" "dimlfac" (/ 1.0 sf))
+   (setq ds (getvar "dimstyle"))   
+   (command "dim" "restore" "tick8" "exit")
+   (setvar "dimlfac" (/ 1.0 sf))
+               
    (setq pt1 ll)
    (setq pt2 (list (car ll) (+ (cadr ll) yab)))
    (setq vloc (list (- (car ll) (* 1.5 sf)) (cadr ll)))
    (setq n 0)
    (while (< n nr)
-      (command "dim1" "vert" pt1 pt2 vloc "") ;DIMENSION ANCHORS
+      (command "dim" "vert" pt1 pt2 vloc "" "exit") ;DIMENSION ANCHORS
       (setq pt1 pt2)
       (setq pt2 (list (car pt1) (+ (cadr pt2) vs)))
       (setq n (1+ n))
@@ -736,7 +785,7 @@
    (setq cgspt (list (car lr) (+ (cadr lr) cgs)))
    (setq cgsloc (list (+ (car lr) (* 1.5 sf))(cadr lr)))
    (setvar "dimpost" "<> CGS")
-   (command "vert" lr cgspt cgsloc "") ;DIMENSION CGS
+   (command "dim" "vert" lr cgspt cgsloc "" "exit") ;DIMENSION CGS
    (setvar "dimpost" "")
    (ssadd (entlast) ss)             
    (if (> nfix 0)
@@ -752,19 +801,19 @@
                (setq pt1 ll)
             )
          )
-         (command "vert" pt1 fap fixdloc "")
+         (command "dim" "vert" pt1 fap fixdloc "" "exit")
          (ssadd (entlast) ss)
       )
    )   
-   (command "restore" ds "e")
+   (command "dim" "restore" ds "exit")
 
            ;;;CALL OUT BACKUP BARS
      
    (if (= colshape nil)
        (setq rn 0)
    )
-   (setq nvertbu (fix(1+ (- nc rn))))  ;NO. OF VERTICAL BACK UP BARS
-   (setq lvertbu (fix (- bd 3)))       ;LENGTH OF VERTICAL BACKUP BARS
+   (setq lvertbu (fix(1+ (- nc rn))))  ;NO. OF VERTICAL BACK UP BARS
+   (setq nvertbu (fix (- bd 3)))       ;LENGTH OF VERTICAL BACKUP BARS
    (setq nhorbu (fix(* 2 nri)))        ;NO. OF HOR. BACK UP BARS
    (setq lhorbu (fix(- bw 3)))         ;LENGTH OF HOR. BACKUP BARS
    (if (> nfixl 0)
@@ -778,8 +827,8 @@
    (setq ip (list (- (car ll) 10) (- (cadr ll) 22)))
    (if (> nvertbu 0)
       (progn
-         (setq nvertbu (strcat (itoa nvertbu) " VERT"))
-         (command "insert" "c:/apps/PT_CAD/rebar/backup_s.dwg" ip (/ (getvar "dimscale") sf) "" "" lvertbu nvertbu)
+         (setq lvertbu (strcat (itoa lvertbu) " VERT"))
+         (command "insert" "c:/apps/PT_CAD/rebar/backup_s.dwg" ip (/ (getvar "dimscale") sf) "" "" lvertbu nvertbu)         
          (setq ip (list (+ (car ll) 12)(cadr ip)))
          (ssadd (entlast) ss)
       )
@@ -799,14 +848,14 @@
                (setq nhorbu (strcat "2" " HOR"))
                (if (> nfixl 0) ;IF FIXED ANCHORS IN SLAB AT LEFT
                   (progn           
-                     (command "insert" "c:/apps/PT_CAD/rebar/backup_s.dwg" ip (/ (getvar "dimscale") sf) "" "" lfixlbu nhorbu)
+                     (command "insert" "c:/apps/PT_CAD/rebar/backup_f.dwg" ip (/ (getvar "dimscale") sf) "" "" lfixlbu nhorbu)
                      (ssadd (entlast) ss)
                      (setq ip (list (+ (car ll) 12)(- (cadr ll) 31)))
                   )
                )
                (if (> nfixr 0) ;IF FIXED ANCHORS IN SLAB AT RIGHT
                   (progn           
-                     (command "insert" "c:/apps/PT_CAD/rebar/backup_s.dwg" ip (/ (getvar "dimscale") sf) "" "" lfixrbu nhorbu)
+                     (command "insert" "c:/apps/PT_CAD/rebar/backup_f.dwg" ip (/ (getvar "dimscale") sf) "" "" lfixrbu nhorbu)
                      (ssadd (entlast) ss)
                   ) 
                )
@@ -822,7 +871,7 @@
    (setvar "attdia" at_status)   ;RESTORE ATTDIA STATUS
     
          ;;;CALL OUT BEAM SIZE
-   (setq bmlabel (strcat (rtos bw 5 1) "X" (rtos bd 5 1)))                    
+   (setq bmlabel (strcat (rtos bw 5 1) "X" (rtos bd 5 1)))
    (setq ip (list (+ (car ll) (/ bw 2.0)) (- (cadr ll) 8)))
    (command "text" "j" "m" ip "" bmlabel)
    (command "scale" "l" "" ip (/ 1.0 sf))
@@ -831,34 +880,10 @@
            ;;;CALL OUT ANCHORS
    (setq atlass '(("D" " DEADEND") ("S" " STRESSEND") ("I" " INTERMEDIATE") ("U" "")))
    (setq ip (list (+ (car ll) (/ bw 2.0)) (- (cadr ll) 11)))
-   (setq anchlab (strcat (itoa na) (cadr (assoc at atlass)) " ANCHORS"))
+   (setq anchlab (strcat (itoa na_) (cadr (assoc at atlass)) " ANCHORS"))
+      
    (command "text" "j" "m" ip "" anchlab)
    (command "scale" "l" "" ip (/ 1.0 sf))
    (ssadd (entlast) ss)
 )
  
-   
-   
-
-
-
-
-
-
-
-
-
-
-
-
-   
-   
-
-
-
-
-
-
-
-
-          
