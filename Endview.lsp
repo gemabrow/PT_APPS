@@ -1,7 +1,8 @@
 (defun c:endview ()
                    
 
-   (setvar "osmode" 0)
+   ;(setvar "osmode" 0)
+   (setq prev_layer (getvar "CLAYER"))
    (setvar "cmdecho" 0)
    (setq sf 8)   ;SET SCALE MULTIPLE
    (setq cover 1.5) ;SET CONCRETE COVER FOR ANCHORS
@@ -21,6 +22,7 @@
    (drawanch)
    (dimanch)
    (command "scale" ss "" ll sf)
+   (setvar "CLAYER" prev_layer) ;restore active layer
 )
 
 (defun input ()
