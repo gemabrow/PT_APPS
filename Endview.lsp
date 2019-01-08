@@ -66,7 +66,7 @@
    (drawanch)
    (dimanch)
    (command "scale" ss "" ll sf)
-   (setvar "osmode" prev_osmode) ;restore previous osmode
+   (setvar "OSMODE" prev_osmode) ;restore previous osmode
    (setvar "CLAYER" prev_layer) ;restore active layer
 )
 
