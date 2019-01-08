@@ -40,8 +40,8 @@
    (setq prev_osmode (getvar "OSMODE"))   
    (setq prev_layer (getvar "CLAYER"))   
    (setq prev_attreq (getvar "ATTREQ"))   
-   (setvar "cmdecho" 0)
-   (setvar "attreq" 1)   
+   (setvar "CMDECHO" 0)
+   (setvar "ATTREQ" 1)   
 
       
    (setq sf 8)   ;SET SCALE MULTIPLEEnter beam width at bottom of beam in inches:
@@ -58,7 +58,7 @@
    (setq ll (getpoint "Pick lower left corner of endview: "))
    (command "-LAYER" "T" "ENDVIEW" "ON" "ENDVIEW" "")
    (setvar "CLAYER" "ENDVIEW")
-   (setvar "osmode" 0)
+   (setvar "OSMODE" 0)
    (drawbeam ll)   
    (if (/= colshape nil)
        (drawbar)
