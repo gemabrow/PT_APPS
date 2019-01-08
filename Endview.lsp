@@ -39,7 +39,7 @@
 (defun c:endview ()
    (setq prev_osmode (getvar "OSMODE"))   
    (setq prev_layer (getvar "CLAYER"))   
-   (setvar "osmode" 0)
+   (setq prev_attreq (getvar "ATTREQ"))   
    (setvar "cmdecho" 0)
    (setvar "attreq" 1)   
 
@@ -51,23 +51,26 @@
    (setq anchout 3) ;DEFAULT DIST ANCHOR CAN LIE OUTSIDE BEAM SIDE
 
       
-
-      
-   (command "-LAYER" "T" "ENDVIEW" "ON" "ENDVIEW" "")
-   (setvar "CLAYER" "ENDVIEW")
    (setq ss (ssadd)) ;SET SS TO NULL SELECTION SET 
    (setq bardial '(("3" 0.375)("4" 0.5)("5" 0.625)("6" 0.75)("7" 0.875)("8" 1.0)("9" 1.128)("10" 1.27)("11" 1.41)
                   ("12" 1.50)("14" 1.693)("18" 2.257)))  ;REBAR DIAMETER ASSOCIATION LIST  
    (input)
-   (drawbeam)   
+   (setq ll (getpoint "Pick lower left corner of endview: "))
+   (command "-LAYER" "T" "ENDVIEW" "ON" "ENDVIEW" "")
+   (setvar "CLAYER" "ENDVIEW")
+   (setvar "osmode" 0)
+   (drawbeam ll)   
    (if (/= colshape nil)
        (drawbar)
    )
    (drawanch)
    (dimanch)
    (command "scale" ss "" ll sf)
+   (while (not (zerop (getvar 'cmdactive)))
+     (command pause))
    (setvar "OSMODE" prev_osmode) ;restore previous osmode
    (setvar "CLAYER" prev_layer) ;restore active layer
+   (setvar "ATTREQ" prev_attreq) ;restore active layer
 )
 
 (defun input ()
@@ -177,10 +180,9 @@
    )      
 )
 
-(defun drawbeam ()  
+(defun drawbeam (destination)  
+   (setq ll destination)
         ;GENERATE 4 BEAM CORNERS  
-       
-   (setq ll (getpoint "Pick lower left corner of endview: "))
    (setq lr (list (+ (car ll) bw) (cadr ll)))
    (setq ul (list (car ll) (+ (cadr ll)  bd)))
    (setq ur (list (car lr) (+ (cadr lr)  bd)))
