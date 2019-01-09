@@ -69,7 +69,7 @@
      (command pause))
    (setvar "OSMODE" prev_osmode) ;restore previous osmode
    (setvar "CLAYER" prev_layer) ;restore active layer
-   (setvar "ATTREQ" prev_attreq) ;restore active layer
+   (setvar "ATTREQ" prev_attreq) ;restore attribute settings
 )
 
 (defun input ()
