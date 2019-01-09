@@ -1,5 +1,6 @@
 (defun _default (itm msg n s)
 	(setq f (cond
+                      ( (= n 0) getreal)
                       ( (= n 1) getint)
                       ( (= n 2) getstring)
                       ( (= n 3) getkword))
@@ -27,10 +28,8 @@
 (foreach  Var  '((ST . 5)  (SJ . "C") (BD . 35)
               (BW . 18) (TW . 18) (DIMTOP . "T")
               (CGS . 25) (NA . "8S")
-              (COLSHAPE . "R")  (COLSIZE . 24)
-              (EVEN . "Y") (COLJUST . "C")
-              (BARS . "3#8"))
-      (if (setq x (eval (car var)))
+              (COLSHAPE . "R")  (COLSIZE . 24) (EVEN . "Y") (COLJUST . "C") (BARS . "3#8"))
+                   (if (setq x (eval (car var)))
             (set (car var) x)
             (set (car var) (cdr var))
             )
@@ -66,7 +65,7 @@
    (drawanch)
    (dimanch)
    (command "scale" ss "" ll sf)
-   (while (not (zerop (getvar 'cmdactive)))
+   (while (/= 0 (getvar 'cmdactive))
      (command pause))
    (setvar "OSMODE" prev_osmode) ;restore previous osmode
    (setvar "CLAYER" prev_layer) ;restore active layer
@@ -97,7 +96,7 @@
        )
    )
 (while (progn      
-   		(setq cgs (_default cgs "Enter the height of the cgs above beam bottom in inches" 1 nil))   
+   		(setq cgs (_default cgs "Enter the height of the cgs above beam bottom in inches" 0 nil))   
    		(> cgs (- bd (/ st 2.0)))
              )
       (alert "Given CGS can not be attained")
@@ -121,8 +120,8 @@
    (if (/= colshape nil)
       (progn    
          (if (= (strcase colshape) "C")
-             (setq colsize (_default colsize "Enter column diameter in decimal inches" 1 nil))
-             (setq colsize (_default colsize "Enter size of column face at beam end in decimal inches" 1 nil))
+             (setq colsize (_default colsize "Enter column diameter in decimal inches" 0 nil))
+             (setq colsize (_default colsize "Enter size of column face at beam end in decimal inches" 0 nil))
          )
          
          (initget "Y N")
@@ -130,7 +129,7 @@
          (initget "C L R O")
          (setq coljust (_default coljust "How is column located w/ respect to beam [Centered/Left justified/Right justified/Offset]" 3 t))         
          (if (= (strcase coljust) "O")
-             (setq offset (_default offset "Enter amount column is offset to right of beam in decimal inches [offset to left as negative no.]" 1 nil))             
+             (setq offset (_default offset "Enter amount column is offset to right of beam in decimal inches [offset to left as negative no.]" 0 nil))             
          )
          (if (= (strcase even) "Y")
              (setq bars (_default bars "Enter rebar quantity & size at rectangular column face or total no. of bars for circular column [eg 3#7]: " 2 t))
@@ -764,7 +763,7 @@
 ) ;END DEFUN      
            
 (defun cantdo ()
-   (alert "CGS TOO HIGH , REQUIRED ANCHORS CAN NOT BE INSTALLED - PROGRAM TERMINATED")
+   (alert "CGS TOO HIGH, REQUIRED ANCHORS CAN NOT BE INSTALLED - PROGRAM TERMINATED")
    (exit)
 )          
              
@@ -880,10 +879,18 @@
    (ssadd (entlast) ss)
 
            ;;;CALL OUT ANCHORS
-   (setq atlass '(("D" " DEADEND") ("S" " STRESSEND") ("I" " INTERMEDIATE") ("U" "")))
+   (setq atlass '(("D" " DEAD END") ("S" " STRESSING END") ("I" " INTERMEDIATE") ("U" "")))
    (setq ip (list (+ (car ll) (/ bw 2.0)) (- (cadr ll) 11)))
    (setq anchlab (strcat (itoa na_) (cadr (assoc at atlass)) " ANCHORS"))
       
+   ;(entmake '(
+   ;   (0 . "MTEXT")
+   ;   (100 . "AcDbEntity")
+   ;   (100 . "AcDbMText")
+   ;   (7 . "romans")
+   ;   (8 . "ENDVIEW_TEXT")	
+   ;   (10 . ip)
+   ;   (1 . anchlab)))
    (command "text" "j" "m" ip "" anchlab)
    (command "scale" "l" "" ip (/ 1.0 sf))
    (ssadd (entlast) ss)
