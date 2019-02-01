@@ -332,17 +332,13 @@
       (if (and (= (strcase lpmethod) "C") (>= h 1.0))
         (progn
           (setq ch (- h 0.25))  ;COMPUTE CHAIR HEIGHT FOR SINGLE-STAR DETAIL
-          (setq ncl (strcat nc " BB"))
-          (if
-            (command "insert" "C:/apps/PT_CAD/pt_supt/chair2" ip 72.0 ""  bad (strcat (spins ch) "\" SB"))
-            (command "insert" "C:/apps/PT_CAD/pt_supt/chair" ip 72.0 ""  bad ncl (strcat (spins ch) "\""))))
+          (setq ncl (strcat nc " SB"))
+          (command "insert" "C:/apps/PT_CAD/pt_supt/chair" ip 72.0 ""  bad ncl (strcat (spins ch) "\"")))
         (progn
           (setq lab (strcat (spins h) " CGS **"))  ;LABEL LOWPOINT WHEN SUPPORTING W/O CHAIR
           (command "text" "j" "c" ip bad lab))))
     (progn
       (setq ch (- h 0.75))  ;COMPUTE CHAIR HEIGHT
-      ;(if (< nnc 3)
-      ;(command "insert" "C:/apps/PT_CAD/pt_supt/chair2" ip 72.0 ""  bad (strcat (spins ch) "\""))
       (command "insert" "C:/apps/PT_CAD/pt_supt/chair" ip 72.0 ""  bad nc (strcat (spins ch) "\""))))
   (command "layer" "T" (strcat t_layer "_sup") "")
   (setvar "CLAYER" (strcat lname "_sup"))
