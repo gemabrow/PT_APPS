@@ -332,7 +332,7 @@
       (if (and (= (strcase lpmethod) "C") (>= h 1.0))
         (progn
           (setq ch (- h 0.25))  ;COMPUTE CHAIR HEIGHT FOR SINGLE-STAR DETAIL
-          (setq ncl (strcat nc " SB"))
+          (setq ncl "SB")
           (command "insert" "C:/apps/PT_CAD/pt_supt/chair" ip 72.0 ""  bad ncl (strcat (spins ch) "\"")))
         (progn
           (setq lab (strcat (spins h) " CGS **"))  ;LABEL LOWPOINT WHEN SUPPORTING W/O CHAIR
