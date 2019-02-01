@@ -108,9 +108,7 @@
         (exit)))
 
     ;;DETERMINE CHAIR QUANTITY
-    (if (= nc 2)
-      (setq nc " ")
-      (setq nc (strcat "(" (itoa nc) ")")))
+    (setq nc (strcat "(" (itoa nc) ")"))
     
     (setq p3 (getpoint "Select both endpoints of support at second highpoint: "))
     (setq p4 (getpoint))
@@ -289,7 +287,7 @@
       (setq bip (list (+ (car barep1)(* d (cos a)))(+ (cadr barep1) (* d (sin a)))))
       (cond
         ((<= dx2 24.0)
-          (setq nc "(2)")
+          (setq nc "\ ")
           (setq bn "C:/Apps/PT_CAD/REBAR/BNDSUP24.dwg"))
         ((and (> dx2 24.0) (<= dx2 36.0))
           (setq nc "(3)")
@@ -329,7 +327,9 @@
   ;GET SUPPORT HEIGHT AND CHAIR QUANTITY
   (command "layer" "T" (strcat t_layer "_sup_text") "")
   (setvar "CLAYER" (strcat lname "_sup_text"))
-  (setq nnc (atoi (substr nc 1 (- (strlen nc) 2)))) ;GET NUMERIC CHAIR QUANTITY FROM STRING
+  (if (< (strlen nc) 3) 
+    (setq nnc 2)
+    (setq nnc (atoi (substr nc 1 (- (strlen nc) 2))))) ;GET NUMERIC CHAIR QUANTITY FROM STRING
   (if (< h 1.5)   ;BEGIN * DETAIL AT 1.875 CGS (1-1/4" IS SHORTEST NON-STAR DETAIL CHAIR)
     (progn
       (if (and (= (strcase lpmethod) "C") (>= h 1.0))
