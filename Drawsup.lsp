@@ -108,7 +108,10 @@
         (exit)))
 
     ;;DETERMINE CHAIR QUANTITY
-    (setq nc (strcat "(" (itoa nc) ")"))
+    (if (= nc 2)
+      (setq nc " ")
+      (setq nc (strcat "(" (itoa nc) ")")))
+    
     (setq p3 (getpoint "Select both endpoints of support at second highpoint: "))
     (setq p4 (getpoint))
     (terpri)
@@ -117,7 +120,7 @@
         (setq p4 (list (car p3) (cadr p4)))
         (setq p4 (list (car p4) (cadr p3)))))
 
-    (if (< (cadr p4)(cadr p3)) ;SORT P1 & P2 W/ RESPECT TO Y
+    (if (< (cadr p4)(cadr p3)) ;SORT P1 & P2W/ RESPECT TO Y
       (progn
         (setq p p3)
         (setq p3 p4)
@@ -326,7 +329,7 @@
   ;GET SUPPORT HEIGHT AND CHAIR QUANTITY
   (command "layer" "T" (strcat t_layer "_sup_text") "")
   (setvar "CLAYER" (strcat lname "_sup_text"))
-  (setq nnc (atoi (substr (substr nc 1 (1- (strlen nc))) 2))) ;GET NUMERIC CHAIR QUANTITY FROM STRING
+  (setq nnc (atoi (substr nc 1 (- (strlen nc) 2)))) ;GET NUMERIC CHAIR QUANTITY FROM STRING
   (if (< h 1.5)   ;BEGIN * DETAIL AT 1.875 CGS (1-1/4" IS SHORTEST NON-STAR DETAIL CHAIR)
     (progn
       (if (and (= (strcase lpmethod) "C") (>= h 1.0))
