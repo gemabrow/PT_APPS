@@ -109,7 +109,7 @@
 
     ;;DETERMINE CHAIR QUANTITY
     (setq nc (strcat "(" (itoa nc) ")"))
-    
+
     (setq p3 (getpoint "Select both endpoints of support at second highpoint: "))
     (setq p4 (getpoint))
     (terpri)
@@ -363,10 +363,10 @@
 (defun spins (c)
   (setq c (rtos c 5 2))
   (if (/= (strlen c) 1)
-    (if (= (substr c (1- (strlen c)) 1) "/")   ;FIND NEXT-TO-LAST DIGIT IN FRACTION
+    (if (= (substr c (strlen c)) "/")   ;FIND NEXT-TO-LAST DIGIT IN FRACTION
       (if (> (strlen c) 3)
         ;CONVERT TO SPECIAL FONT IF > 7/8"
-        (setq c (strcat (substr c 1 (- (strlen c) 4))
+        (setq c (strcat (substr c (- (strlen c) 4))
                         (cadr (assoc (substr c (- (strlen c) 2) 3) scarl))))
         ;CONVERT TO SPECIAL FONT IF <= 7/8"
         (setq c (cadr (assoc c scarl))))))
