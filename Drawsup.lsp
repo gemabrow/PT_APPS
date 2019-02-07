@@ -327,9 +327,6 @@
   ;GET SUPPORT HEIGHT AND CHAIR QUANTITY
   (command "layer" "T" (strcat t_layer "_sup_text") "")
   (setvar "CLAYER" (strcat lname "_sup_text"))
-  (if (< (strlen nc) 3) 
-    (setq nnc 2)
-    (setq nnc (atoi (substr nc 1 (- (strlen nc) 2))))) ;GET NUMERIC CHAIR QUANTITY FROM STRING
   (if (< h 1.5)   ;BEGIN * DETAIL AT 1.875 CGS (1-1/4" IS SHORTEST NON-STAR DETAIL CHAIR)
     (progn
       (if (and (= (strcase lpmethod) "C") (>= h 1.0))
