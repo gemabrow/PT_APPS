@@ -3,6 +3,8 @@
   
   ;PROGRAM TO READ ATTRIBUTE FILE (C:\ACADWIN\CCS\CHAIRBOM.TXT)
   ;AND TO WRITE A CHAIR BILL-OF-MATERIALS BACK TO DRAWING
+  (setq osmode (getvar 'osmode))
+  (setvar "OSMODE" 0)
   (setvar "CMDECHO" 0)
   (setvar "FILEDIA" 0) 
   
@@ -23,7 +25,6 @@
     (progn
       (setq scale (getreal "Enter scale factor - 96 for 1/8\", 128 for 3/32\", 192 for 1/16\" [SCALE FACTOR X 25.4 FOR METRIC]: "))
       (setvar "dimscale" scale)))
-  ;(if (= (cdr (assoc '40 (tblsearch "style" (getvar "textstyle")))) 0.0)
   (command "style" "ROMANS" "ROMANS.shx,SPECIAL.shx" (/ (getvar "dimscale") 8.0) 0.9 0 "N" "N" "N")  
   (setq chrhts '())
   (setq alist '())
@@ -31,9 +32,9 @@
   (close a)
   (setq sp (getpoint "Pick starting point for chair schedule: "))
   (printatt (length slist) 0 sp)
+  (printctable sp)
   (setvar "CMDECHO" 1)
-  (if (/= omo nil)
-    (setvar "osmode" omo)))
+  (setvar "OSMODE" osmode))
 
 (defun listatt ()
   (while (setq l (read-line a))  
@@ -96,13 +97,67 @@
   (setq i (1+ i))
   (if (< i n) (printatt n i sp)))
 
-(defun princtable (n i sp)
-  
-)
+(defun printctable (sp)
+  ;Prints CTABLE Block with values from listatt result
+  (setq output_layer "BAND_SUP_TEXT")
+  (setq chaired_layers "BAND_SUP_TEXT,UNIFORM_SUP_TEXT")
+  (setq output_block "CTABLE")
+  (command "-LAYER" "_ON" chaired_layers
+                    "_T" chaired_layers
+                    "_S" output_layer "")
+  (setq pour_num (getstring "Pour(s)?"))
+  (setq floor_num (getstring "Floor(s)?"))
+  (command "-INSERT" output_block insertion_point 1 "use X scale factor" 0 pour_num floor_num
+    (cdr (assoc   "~w\""slist))
+    (cdr (assoc "1\""   slist))
+    (cdr (assoc "1~4\"" slist))
+    (cdr (assoc "1~8\"" slist))
+    (cdr (assoc "1~w\"" slist))
+    (cdr (assoc "2\""   slist))
+    (cdr (assoc "2~4\"" slist))
+    (cdr (assoc "2~8\"" slist))
+    (cdr (assoc "2~w\"" slist))
+    (cdr (assoc "3\""   slist))
+    (cdr (assoc "3~4\"" slist))
+    (cdr (assoc "3~8\"" slist))
+    (cdr (assoc "3~w\"" slist))
+    (cdr (assoc "4\""   slist))
+    (cdr (assoc "4~4\"" slist))
+    (cdr (assoc "4~8\"" slist))
+    (cdr (assoc "4~w\"" slist))
+    (cdr (assoc "5\""   slist))
+    (cdr (assoc "5~4\"" slist))
+    (cdr (assoc "5~8\"" slist))
+    (cdr (assoc "5~w\"" slist))
+    (cdr (assoc "6\""   slist))
+    (cdr (assoc "6~4\"" slist))
+    (cdr (assoc "6~8\"" slist))
+    (cdr (assoc "6~w\"" slist))
+    (cdr (assoc "7\""   slist))
+    (cdr (assoc "7~4\"" slist))
+    (cdr (assoc "7~8\"" slist))
+    (cdr (assoc "7~w\"" slist))
+    (cdr (assoc "8\""   slist))
+    (cdr (assoc "8~4\"" slist))
+    (cdr (assoc "8~8\"" slist))
+    (cdr (assoc "8~w\"" slist))
+    (cdr (assoc "9\""   slist))
+    (cdr (assoc "9~4\"" slist))
+    (cdr (assoc "9~8\"" slist))
+    (cdr (assoc "9~w\"" slist))
+    (cdr (assoc "10\""   slist))
+    (cdr (assoc "10~4\"" slist))
+    (cdr (assoc "10~8\"" slist))
+    (cdr (assoc "10~w\"" slist))
+    (cdr (assoc "11\""   slist))
+    (cdr (assoc "11~4\"" slist))
+    (cdr (assoc "11~8\"" slist))
+    (cdr (assoc "11~w\"" slist))
+    (cdr (assoc "12\""   slist))
+    0 0 0 "")); 3/4" SB, 1" SB, & 1-1/4" SB
 
 ;;;		pBe Helper function to sort alist variable	;;;
 ;;;								;;;
-
 (defun _ToDecimal (str / p  )
   (if (vl-string-position 126 str)
     (distof (vl-some '(lambda (s)
