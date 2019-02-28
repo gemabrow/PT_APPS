@@ -32,7 +32,7 @@
   (close a)
   (setq sp (getpoint "Pick starting point for chair schedule: "))
   (printatt (length slist) 0 sp)
-  (printctable sp)
+  ;(printctable sp)
   (setvar "CMDECHO" 1)
   (setvar "OSMODE" osmode))
 
