@@ -59,32 +59,32 @@
         (setq old (assoc (car cl) alist))
         (setq new (append old (cdr cl)))
         (setq alist (subst new old alist)))))
-  (setq slist '())
+  (setq slist '()
 
 ;;;				Sort alsit descending order    					;;;
 ;;;	The cons function for slist reverses the order thus making it ascneding order     	;;;
 
    (foreach x (vl-sort alist
                 '(lambda (a b) (> (_ToDecimal (Car a)) (_ToDecimal (car b)))))
-      (setq slist (cons (list (car x) (apply '+ (cdr x))) slist))))
+      (setq slist (cons (list (car x) (apply '+ (cdr x))) slist)))))
 
-(defun proline (l cn 2f h n / hnl cc )
+(defun proline (l cn 2f h n / hnl cc)
   (setq cc (substr l cn 1))
   (cond
-    ((= cn (1+ (strlen l)))
-      (setq hnl (list h (atoi n))))
-    ((and (member cc charlist) (not 2f))
+    ((= cn (1+ (strlen l))
+      (setq hnl (list h (atoi n)))))
+    ((and (member cc charlist) (not 2f)
       (if (= h nil)
         (setq h cc)
         (setq h (strcat h cc)))
-      (proline l (1+ cn) nil h n))
-    ((= cc ",")
-      (proline l (1+ cn) T h n))
-    ((and (member cc charlist) 2f)
+      (proline l (1+ cn) nil h n)))
+    ((= cc ","
+      (proline l (1+ cn) T h n)))
+    ((and (member cc charlist) 2f
       (if (= n "")
         (setq n cc)
         (setq n (strcat n cc)))
-      (proline l (1+ cn) T h n))
+      (proline l (1+ cn) T h n)))
     (T (proline l (1+ cn) 2f h n))))
 
 (defun printatt (n i sp)
@@ -102,6 +102,13 @@
   (setq output_layer "BAND_SUP_TEXT")
   (setq chaired_layers "BAND_SUP_TEXT,UNIFORM_SUP_TEXT")
   (setq output_block "CTABLE")
+  ;(assoc
+  ;  0.00 "\""
+  ;  0.25 "~4\""
+  ;  0.50 "~8\""
+  ;  0.75 "~w\"")
+  ;(loop for x from 0.75 to 12 by 0.25)
+  ;  (do truncate)
   (command "-LAYER" "_ON" chaired_layers
                     "_T" chaired_layers
                     "_S" output_layer "")
@@ -154,16 +161,16 @@
     (cdr (assoc "11~8\"" slist))
     (cdr (assoc "11~w\"" slist))
     (cdr (assoc "12\""   slist))
-    0 0 0 "")); 3/4" SB, 1" SB, & 1-1/4" SB
+    0 0 0 "")); 3/4" SB, 1" SB, & 1-1/4" SB))
 
 ;;;		pBe Helper function to sort alist variable	;;;
 ;;;								;;;
-(defun _ToDecimal (str / p  )
+(defun _ToDecimal (str / p)
   (if (vl-string-position 126 str)
-    (distof (vl-some '(lambda (s)
+    (distof (vl-some '(lambda (s)))
       (if (Setq p (vl-string-search (Car s) str))
-        (vl-string-subst (cadr s) (Car s) str p)))
-      '(("~1\"" ".625")
+        (vl-string-subst (cadr s) (Car s) str p))
+      '(("~1\"" ".625"))
       ("~2\""  ".125")
       ("~3\""  ".1875")
       ("~4\""  ".25")
@@ -176,5 +183,5 @@
       ("~q\""  ".6875")
       ("~w\""  ".75")
       ("~r\""  ".875")
-      ("~t\""  ".9375"))))
+      ("~t\""  ".9375"))
     (atoi str)))

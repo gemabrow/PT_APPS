@@ -51,7 +51,7 @@ PgNode_s	my_planning_graph.py	/^class PgNode_s(PgNode):$/;"	c
 PlanningGraph	my_planning_graph.py	/^class PlanningGraph():$/;"	c
 RCLOUD1	RCLOUD.lsp	/^(defun RCLOUD1 ()$/;"	f
 Radian->Degrees	ROT.lsp	/^(defun Radian->Degrees (nbrOfRadians)$/;"	f
-_ToDecimal	ERNA.lsp	/^(defun _ToDecimal (str \/ p  )$/;"	f
+_ToDecimal	ERNA.lsp	/^(defun _ToDecimal (str \/ p)$/;"	f
 __eq__	my_planning_graph.py	/^    def __eq__(self, other):$/;"	m	class:PgNode_a
 __eq__	my_planning_graph.py	/^    def __eq__(self, other):$/;"	m	class:PgNode_s
 __hash__	my_planning_graph.py	/^    def __hash__(self):$/;"	m	class:PgNode_a
@@ -239,7 +239,7 @@ printatt	BANDBOM.lsp	/^(defun printatt (n i sp)$/;"	f
 printatt	ERNA.lsp	/^(defun printatt (n i sp)$/;"	f
 printatt	erna_old.lsp	/^(defun printatt (n i sp)$/;"	f
 printctable	ERNA.lsp	/^(defun printctable (sp)$/;"	f
-proline	ERNA.lsp	/^(defun proline (l cn 2f h n \/ hnl cc )$/;"	f
+proline	ERNA.lsp	/^(defun proline (l cn 2f h n \/ hnl cc)$/;"	f
 proline	erna_old.lsp	/^(defun proline (l cn 2f h n \/ hnl cc )$/;"	f
 result	my_air_cargo_problems.py	/^    def result(self, state: str, action: Action):$/;"	m	class:AirCargoProblem
 s::startup	ACADR13.lsp	/^(defun s::startup ()$/;"	f
