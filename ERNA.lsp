@@ -99,8 +99,6 @@
   (setq output_block "C:\\Apps\\PT_CAD\\GENERAL\\CTABLE.dwg")
   (setq pour_num (getstring "Pour(s):"))
   (setq floor_num (getstring "Floor(s):"))
-  (princ pour_num)
-  (princ floor_num)
   (setq index 0)
   (setq max_entries_per_table 47)
   (setq modulo (rem (length slist) max_entries_per_table))
