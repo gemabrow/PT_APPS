@@ -101,11 +101,15 @@
   (setq floor_num (getstring "Floor(s):"))
   (princ pour_num)
   (princ floor_num)
-  (setq index (length slist))
-  (setq max_entries 47)
-  (while (< index max_entries)
+  (setq index 0)
+  (setq max_entries_per_table 47)
+  (setq modulo (rem (length slist) max_entries_per_table))
+  (setq quantity_blank_entries (- max_entries_per_table modulo))
+  (while (< index quantity_blank_entries)
     (setq slist (append slist (list '("-" "-"))))
     (setq index (1+ index)))
+  (setq quantity_tables (/ (length slist) max_entries_per_table))
+  (setq index 0)
   
   (command "-LAYER" "_ON" chaired_layers
                     "_T" chaired_layers
@@ -209,14 +213,20 @@
     (chair_quantity 46)
     0 0 0)); 3/4" SB, 1" SB, & 1-1/4" SB
 
-(defun chair_height (index)
-  (car (nth index slist)))
+(defun chair_height (chair_index)
+  (car (nth (+ chair_index (* index  max_entries_per_table)) slist)))
 
 ; retrieve qty if valid + 0.5%
-(defun chair_quantity (index)
-  (if (numberp (cadr (nth index slist)))
-    (fix (1+ (* (cadr (nth index slist)) 1.05)))
-    (cadr (nth index slist))))
+(defun chair_quantity (chair_index)
+  (if (numberp (cadr (nth chair_index slist)))
+    (fix (1+ (* (cadr
+      (nth 
+        (+ chair_index (* index  max_entries_per_table))
+        slist)) 1.05)))
+    (cadr
+      (nth
+        (+ chair_index (* index  max_entries_per_table))
+        slist))))
 
 ;;;		pBe Helper function to sort alist variable	;;;
 ;;;								;;;
