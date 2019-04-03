@@ -2,7 +2,9 @@
 
   (setq ss_tendon nil)   ;INITIALIZE TENDON SELECTION SET
   (setq nc 0)            ;INITIALIZE NUMBER OF CHAIRS
-
+  
+  (setq cmdecho (getvar 'cmdecho))
+  (setq attdia (getvar 'attdia))
   (setvar "cmdecho" 0)   ;DO NOT ECHO COMMANDS
   (setvar "attdia" 0)
 
@@ -12,8 +14,7 @@
                 ("1/2" "~8")
                 ("5/8" "~0")
                 ("3/4" "~w")
-                ("7/8" "~r"))
-  )
+                ("7/8" "~r")))
 
   (setq bsup_exist 'N) ;FLAG FOR EXISTING BEGINNING SUPPORT
   (setq esup_exist 'N) ;FLAG FOR EXISTING ENDING SUPPORT
@@ -135,8 +136,7 @@
                                   (8 . "BAND_SUP")
                                   (-4 . "OR>")
                                   (-4 . "AND>"))) ;DON'T DRAW LINE IF ALREADY EXISTS
-      (setq esup_exist 'Y)
-    )
+      (setq esup_exist 'Y))
 
     ;;DETERMINE CORRESPONDING ENDPOINTS
     (if (< (distance p1 p3)(distance p1 p4))
@@ -231,7 +231,8 @@
     (progn
       (initget "Y y N n")
       (setq continue_profile (getkword "Continue profile? [Y or N] ")))) ;END WHILE
-  (setvar "attdia" 1))
+  (setvar "attdia" attdia)
+  (setvar "cmdecho" cmdecho))
 
 (defun drawspacingdim (ns d p1 p2 mode layer)
   (setvar "CLAYER" (strcat layer "_sup_text"))
