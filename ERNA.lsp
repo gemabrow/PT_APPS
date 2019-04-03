@@ -218,7 +218,7 @@
       (chair_height (+ 48 index))
       (chair_quantity (+ 48 index))
       (chair_height (+ 49 index))
-      (chair_quantity (+ 49 index))); 3/4" SB, 1" SB, & 1-1/4" SB
+      (chair_quantity (+ 49 index)))
       (setq index (+ index max_entries_per_table))))
 
 (defun chair_height (chair_index)
