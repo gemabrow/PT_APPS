@@ -51,7 +51,8 @@ PgNode_s	my_planning_graph.py	/^class PgNode_s(PgNode):$/;"	c
 PlanningGraph	my_planning_graph.py	/^class PlanningGraph():$/;"	c
 RCLOUD1	RCLOUD.lsp	/^(defun RCLOUD1 ()$/;"	f
 Radian->Degrees	ROT.lsp	/^(defun Radian->Degrees (nbrOfRadians)$/;"	f
-_ToDecimal	ERNA.lsp	/^(defun _ToDecimal (str \/ p)$/;"	f
+_ToDecimal	ERNA - Non-working.lsp	/^(defun _ToDecimal (str \/ p)$/;"	f
+_ToDecimal	ERNA.lsp	/^(defun _ToDecimal (str \/ p  )$/;"	f
 __eq__	my_planning_graph.py	/^    def __eq__(self, other):$/;"	m	class:PgNode_a
 __eq__	my_planning_graph.py	/^    def __eq__(self, other):$/;"	m	class:PgNode_s
 __hash__	my_planning_graph.py	/^    def __hash__(self):$/;"	m	class:PgNode_a
@@ -111,6 +112,7 @@ c:beam_spt	Bsx.lsp	/^(defun c:beam_spt ()$/;"	f
 c:bmplan	BP.lsp	/^(defun c:bmplan ()$/;"	f
 c:bmplan	beamplan.lsp	/^(defun c:bmplan ()$/;"	f
 c:break1	BREAK1.lsp	/^(defun c:break1 ()$/;"	f
+c:chairbom	ERNA - Non-working.lsp	/^(defun c:chairbom ()$/;"	f
 c:chairbom	ERNA.lsp	/^(defun c:chairbom ()$/;"	f
 c:chairbom	erna_old.lsp	/^(defun c:chairbom ()$/;"	f
 c:cht	CHTEXT.lsp	/^(defun c:cht    () (chtxt))$/;"	f
@@ -139,6 +141,8 @@ c:tiffin	acadr14.lsp	/^(defun c:tiffin ()$/;"	f
 c:totlen	TOTLEN.lsp	/^(defun c:totlen ()$/;"	f
 cantdo	Endview.lsp	/^(defun cantdo ()$/;"	f
 cantdo	Endview_modified.lsp	/^(defun cantdo ()$/;"	f
+chair_height	ERNA.lsp	/^(defun chair_height (chair_index)$/;"	f
+chair_quantity	ERNA.lsp	/^(defun chair_quantity (chair_index)$/;"	f
 chgtext	CHTEXT.lsp	/^(defun chgtext (objs \/ last_o tot_o ent o_str n_str st s_temp $/;"	f
 cht_je	CHTEXT.lsp	/^(defun cht_je ()$/;"	f
 cht_le	CHTEXT.lsp	/^(defun cht_le ()$/;"	f
@@ -225,6 +229,7 @@ label	BS.lsp	/^(defun label ()$/;"	f
 label	Bsx.lsp	/^(defun label ()$/;"	f
 label	beamplan.lsp	/^(defun label ()$/;"	f
 listatt	BANDBOM.lsp	/^(defun listatt ()$/;"	f
+listatt	ERNA - Non-working.lsp	/^(defun listatt ()$/;"	f
 listatt	ERNA.lsp	/^(defun listatt ()$/;"	f
 listatt	erna_old.lsp	/^(defun listatt ()$/;"	f
 load_actions	my_air_cargo_problems.py	/^        def load_actions():$/;"	f	member:AirCargoProblem.get_actions	file:
@@ -236,10 +241,12 @@ noop_actions	my_planning_graph.py	/^    def noop_actions(self, literal_list):$/;
 playtbk	ACADR13.lsp	/^(defun playtbk (book \/ exe full fbook)$/;"	f
 precond_s_nodes	my_planning_graph.py	/^    def precond_s_nodes(self):$/;"	m	class:PgNode_a
 printatt	BANDBOM.lsp	/^(defun printatt (n i sp)$/;"	f
-printatt	ERNA.lsp	/^(defun printatt (n i sp)$/;"	f
+printatt	ERNA - Non-working.lsp	/^(defun printatt (n i sp)$/;"	f
 printatt	erna_old.lsp	/^(defun printatt (n i sp)$/;"	f
+printctable	ERNA - Non-working.lsp	/^(defun printctable (sp)$/;"	f
 printctable	ERNA.lsp	/^(defun printctable (sp)$/;"	f
-proline	ERNA.lsp	/^(defun proline (l cn 2f h n \/ hnl cc)$/;"	f
+proline	ERNA - Non-working.lsp	/^(defun proline (l cn 2f h n \/ hnl cc)$/;"	f
+proline	ERNA.lsp	/^(defun proline (l cn 2f h n \/ hnl cc )$/;"	f
 proline	erna_old.lsp	/^(defun proline (l cn 2f h n \/ hnl cc )$/;"	f
 result	my_air_cargo_problems.py	/^    def result(self, state: str, action: Action):$/;"	m	class:AirCargoProblem
 s::startup	ACADR13.lsp	/^(defun s::startup ()$/;"	f
