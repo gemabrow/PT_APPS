@@ -44,8 +44,9 @@
   ;  (setq a1 (/ 1.0 a1)))
 
   ;USER INPUT TO DETERMINE SUPPORT METHOD AT LOWPOINT
-  (initget 1 "c C s S")
-  (setq lpmethod (getkword "Use [C]hairs or Rebar [S]upports at CGS lower than 1-1/2\": "))
+  ;(initget 1 "c C s S")
+  ;(setq lpmethod (getkword "Use [C]hairs or Rebar [S]upports at CGS lower than 1-1/2\": "))
+  (setq lpmethod "C")
 
   (initget 1 "u U b B")
   (setq t_layer (getkword "Enter U for Uniform or B for Banded tendon supports: "))
@@ -110,7 +111,7 @@
 
     ;;DETERMINE CHAIR QUANTITY
     (setq nc (strcat "(" (itoa nc) ")"))
-    
+
     (setq p3 (getpoint "Select both endpoints of support at second highpoint: "))
     (setq p4 (getpoint))
     (terpri)
@@ -342,8 +343,7 @@
       (setq ch (- h 0.75))  ;COMPUTE CHAIR HEIGHT
       (command "insert" "C:/apps/PT_CAD/pt_supt/chair" ip 72.0 ""  bad nc (strcat (spins ch) "\""))))
   (command "layer" "T" (strcat t_layer "_sup") "")
-  (setvar "CLAYER" (strcat lname "_sup"))
-)
+  (setvar "CLAYER" (strcat lname "_sup")))
 
 (defun intpt (l fac i / x y)
   (setq x (+ (car (car l))  (* (* (- (car (cadr l))(car (car l))) fac) i)))
