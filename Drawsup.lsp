@@ -3,10 +3,11 @@
   (setq ss_tendon nil)   ;INITIALIZE TENDON SELECTION SET
   (setq nc 0)            ;INITIALIZE NUMBER OF CHAIRS
   
-  (setq cmdecho (getvar 'cmdecho))
   (setq attdia (getvar 'attdia))
-  (setvar "cmdecho" 0)   ;DO NOT ECHO COMMANDS
+  (setq cmdecho (getvar 'cmdecho))
+  (setq osmode (getvar 'osmode))
   (setvar "attdia" 0)
+  (setvar "cmdecho" 0)   ;DO NOT ECHO COMMANDS
 
   (setq scarl '(("1/8" "~2")
                 ("1/4" "~4")
@@ -44,9 +45,9 @@
   ;  (setq a1 (/ 1.0 a1)))
 
   ;USER INPUT TO DETERMINE SUPPORT METHOD AT LOWPOINT
-  (initget 1 "c C s S")
-  (setq lpmethod (getkword "Use [C]hairs or Rebar [S]upports at CGS lower than 1-1/2\": "))
-
+  ;(initget 1 "c C s S")
+  ;(setq lpmethod (getkword "Use [C]hairs or Rebar [S]upports at CGS lower than 1-1/2\": "))
+  (setq lpmethod "C")
   (initget 1 "u U b B")
   (setq t_layer (getkword "Enter U for Uniform or B for Banded tendon supports: "))
   (if (= (strcase t_layer) "U")
@@ -113,6 +114,7 @@
     
     (setq p3 (getpoint "Select both endpoints of support at second highpoint: "))
     (setq p4 (getpoint))
+    (setvar "osmode" 0)
     (terpri)
     (if (= (getvar "orthomode") 1) ;MAKE P4 ORTHO W/ RESPECT TO P3 IF ORTHOMODE IS ON
       (if (< (abs (- (car p3) (car p4))) (abs (- (cadr p3 ) (cadr p4))))
@@ -232,7 +234,8 @@
       (initget "Y y N n")
       (setq continue_profile (getkword "Continue profile? [Y or N] ")))) ;END WHILE
   (setvar "attdia" attdia)
-  (setvar "cmdecho" cmdecho))
+  (setvar "cmdecho" cmdecho)
+  (setvar "osmode" osmode))
 
 (defun drawspacingdim (ns d p1 p2 mode layer)
   (setvar "CLAYER" (strcat layer "_sup_text"))
