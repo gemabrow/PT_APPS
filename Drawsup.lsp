@@ -114,6 +114,7 @@
 
     (setq p3 (getpoint "Select both endpoints of support at second highpoint: "))
     (setq p4 (getpoint))
+    (setq osmode (getvar 'osmode))
     (setvar "osmode" 0)
     (terpri)
     (if (= (getvar "orthomode") 1) ;MAKE P4 ORTHO W/ RESPECT TO P3 IF ORTHOMODE IS ON
