@@ -111,7 +111,7 @@
 
     ;;DETERMINE CHAIR QUANTITY
     (setq nc (strcat "(" (itoa nc) ")"))
-    
+
     (setq p3 (getpoint "Select both endpoints of support at second highpoint: "))
     (setq p4 (getpoint))
     (setvar "osmode" 0)
@@ -345,8 +345,7 @@
       (setq ch (- h 0.75))  ;COMPUTE CHAIR HEIGHT
       (command "insert" "C:/apps/PT_CAD/pt_supt/chair" ip 72.0 ""  bad nc (strcat (spins ch) "\""))))
   (command "layer" "T" (strcat t_layer "_sup") "")
-  (setvar "CLAYER" (strcat lname "_sup"))
-)
+  (setvar "CLAYER" (strcat lname "_sup")))
 
 (defun intpt (l fac i / x y)
   (setq x (+ (car (car l))  (* (* (- (car (cadr l))(car (car l))) fac) i)))
