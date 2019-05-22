@@ -35,6 +35,7 @@
   (listatt)
   (close a)
   (setq sp (getpoint "Pick starting point for chair schedule: "))
+  ;(setq margin (cond ((getreal "\nEnter multiplication constant for values: ")) (1.05)))
   (setvar "OSMODE" 0)
   (printctable sp)
   (setvar "FILEDIA" filedia)
@@ -113,8 +114,8 @@
   (setq index 0)
   
   (command "-LAYER" "_ON" chaired_layers
-                      "_T" chaired_layers
-                      "_S" output_layer "")
+                    "_T"  chaired_layers
+                    "_S"  output_layer "")
   (while (< index (length slist))
     (command "-INSERT" output_block sp 1
       1 0 pour_num floor_num 
@@ -224,7 +225,7 @@
 (defun chair_height (chair_index)
   (car (nth chair_index slist)))
 
-; retrieve qttable_index if valid + 0.5%
+;;; retrieve qttable_index if valid + 0.5%
 (defun chair_quantity (chair_index)
   (if (numberp (cadr (nth chair_index slist)))
     (fix (1+ (* (cadr
@@ -233,7 +234,6 @@
       (nth chair_index slist))))
 
 ;;;		pBe Helper function to sort alist variable	;;;
-;;;								;;;
 (defun _ToDecimal (str / p  )
   (if (vl-string-position 126 str)
     (distof
@@ -241,7 +241,7 @@
         '(lambda (s)
           (if (Setq p (vl-string-search (Car s) str))
             (vl-string-subst (cadr s) (Car s) str p)))
-        '(("~1\"" ".625")
+        '(("~1\""  ".625")
           ("~2\""  ".125")
           ("~3\""  ".1875")
           ("~4\""  ".25")
