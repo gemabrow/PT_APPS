@@ -48,10 +48,9 @@
   ;(initget 1 "c C s S")
   ;(setq lpmethod (getkword "Use [C]hairs or Rebar [S]upports at CGS lower than 1-1/2\": "))
   (setq lpmethod "C")
-  (initget 1 "u U b B")
-  (setq t_layer (getkword "Enter U for Uniform or B for Banded tendon supports: "))
-  (if (= (strcase t_layer) "U")
+  (if (= (substr (getvar "CLAYER") 1 7) "UNIFORM")
     (setq t_layer "UNIFORM")
+    ;TODO: Assert BAND in substring of CLAYER
     (setq t_layer "BAND"))
 
   (command "layer" "T" t_layer "")  ;THAW AFFECTED LAYER
