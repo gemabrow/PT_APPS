@@ -654,7 +654,7 @@
       (setq lfixrbu (fix (1+ (* nfixr 6)))))   ;LENGTH OF BACKUP BARS @ RIGHT FIXED ANCHORS IF ANY
    (setq at_status (getvar "attdia"))
    (setvar "attdia" 0)                       ;TURN OFF DIALOGUE BOX FOR ATTRIBUTES
-   (setq ip (list (- (car ll) 10) (- (cadr ll) 22)))
+   (setq ip (list (- (car ll) 10) (- (cadr ll) 13)))
    (if (> nvertbu 0)
       (progn
          (setq lvertbu (strcat (itoa lvertbu) " VERT"))
