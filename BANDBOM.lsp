@@ -1,6 +1,5 @@
 (defun c:bandbom ()
                       
-
   ;PROGRAM TO READ ATTRIBUTE FILE (C:\ACADWIN\CCS\CHAIRBOM.TXT)
   ;AND TO WRITE A CHAIR BILL-OF-MATERIALS BACK TO DRAWING
   (setq osmode (getvar 'osmode))
@@ -56,7 +55,7 @@
       (setq slist (cons (list (car x) (apply '+ (cdr x))) slist)))
    (if (> (length slist) 1) 
       (setq slist (sortbyl slist 1 '() (atoi (substr (car (car slist)) 1 2)) 0))))
-     ;;;SORT SLIST BY BAND SUPPORT BAR LENGTH
+      ;;;SORT SLIST BY BAND SUPPORT BAR LENGTH
 
 ;sl - SLIST, n - COUNTER, rl - RETURN LIST, cv - CURRENT VALUE, cn - CURRENT VALUE COUNTER
 (defun sortbyl (sl n rl cv cn / tv)
@@ -72,7 +71,7 @@
            (sortbyl sl 1 rl (atoi (substr (car (car slist)) 1 2)) 0))
           ((< tv cv)                  
            (sortbyl sl (1+ n) rl tv n))
-          (T (sortbyl sl (1+ n) rl cv cn))))  
+          (T (sortbyl sl (1+ n) rl cv cn))))) 
  
 (defun printatt (n i sp)
    (setq l (car (nth i slist)))
@@ -83,4 +82,3 @@
    (setq sp (list (car sp) (- (cadr sp) (/ scale 3))))
    (setq i (1+ i))
    (if (< i n) (printatt n i sp)))
-
