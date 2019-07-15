@@ -24,5 +24,4 @@
           tl (+ tl l)
           n (1- n)))
   (alert (strcat "Total length of selected objects is " (rtos tl)))
-  (princ)
-)
+  (princ))
