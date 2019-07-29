@@ -225,7 +225,7 @@
 (defun chair_height (chair_index)
   (car (nth chair_index slist)))
 
-;;; retrieve qttable_index if valid + 0.5%
+;;; retrieve qttable_index if valid + 5%
 (defun chair_quantity (chair_index)
   (if (numberp (cadr (nth chair_index slist)))
     (fix (1+ (* (cadr
