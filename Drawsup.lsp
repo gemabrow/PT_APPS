@@ -108,7 +108,6 @@
         (alert "NO TENDONS FOUND ON THE UNIFORM OR BAND LAYERS - PROGRAM CANCELED")
         (setvar "attdia" attdia)
         (setvar "cmdecho" cmdecho)
-        (setvar "osmode" osmode)
         (exit)))
 
     ;;DETERMINE CHAIR QUANTITY
@@ -235,7 +234,8 @@
     (progn
       (setvar "osmode" osmode)
       (initget "Y y N n")
-      (setq continue_profile (getkword "Continue profile? [Y or N] ")))) ;END WHILE
+      (setq continue_profile
+        (getkword "Continue profile? [Y or N] ")))) ;END WHILE
     (setvar "attdia" attdia)
     (setvar "cmdecho" cmdecho))
 
